@@ -1,7 +1,6 @@
 import { getPokemonList } from '../utils/lib'
 import PokemonButton from './components/atom/PokemonButton'
 import PokemonInput from './components/atom/PokemonInput'
-import dynamic from 'next/dynamic'
 const Page = async () => {
   const pokemonList = await getPokemonList()
 

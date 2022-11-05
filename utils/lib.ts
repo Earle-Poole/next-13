@@ -7,7 +7,9 @@ export async function getPokemonByName(name: string): Promise<Pokemon> {
 }
 
 export async function getPokemonList(): Promise<NamedAPIResourceList> {
-  const response = await fetch(POKE_API_ROOT + '?limit=100000&offset=0')
+  const response = await fetch(POKE_API_ROOT + '?limit=100000&offset=0', {
+    next: { revalidate: 3600 },
+  })
 
   return response.json()
 }
