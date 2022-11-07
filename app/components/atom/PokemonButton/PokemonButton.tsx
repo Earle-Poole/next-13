@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { NamedAPIResourceList } from '../../types'
+import { NamedAPIResourceList } from '../../../types'
 
 const PokemonButton = ({
   pokemonList,

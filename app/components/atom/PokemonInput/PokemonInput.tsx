@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { SyntheticEvent } from 'react'
+import { useRouter } from 'next/navigation'
 
 const POKEMON_NAME = 'pokemon-name'
 

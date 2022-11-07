@@ -45,7 +45,10 @@ pre {
 }
 svg {
   display: block;
-  vertical-align: middle;
   shape-rendering: auto;
   text-rendering: optimizeLegibility;
+}
+
+[data-nextjs-scroll-focus-boundary] {
+  height: 100%;
 }
