@@ -264,3 +264,8 @@ export interface ErrorPageProps {
 export interface LayoutPageProps {
   children: React.ReactNode
 }
+
+export interface WithPageProps<T, P = {}> {
+  params: T
+  subParams: P
+}

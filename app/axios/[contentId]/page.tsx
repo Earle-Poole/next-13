@@ -1,14 +1,10 @@
-import { asyncComponent } from '@/utils/lib'
 import { getContentByID } from '@/utils/cache'
 
-interface PageProps {
+export default async function Page(props: {
   params: {
     contentId: string
   }
-  searchParams: {}
-}
-
-const Page = asyncComponent(async (props: PageProps) => {
+}) {
   const { contentId } = props.params
   const topic = await getContentByID(contentId)
 
@@ -17,6 +13,4 @@ const Page = asyncComponent(async (props: PageProps) => {
       <h1 className='text-4xl'>{topic.headline}</h1>
     </div>
   )
-})
-
-export default Page
+}

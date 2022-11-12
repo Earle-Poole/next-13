@@ -1,13 +1,10 @@
-import {
-  getPokemonByName,
-  getRandomPokemon,
-  isServer,
-} from '../../../utils/lib'
-import PokemonButton from '../../components/molecules/PokemonButton'
-import PokemonCard from '../../components/organisms/PokemonCard'
-import { getPokemonList } from '../../../utils/cache'
+import { getPokemonByName, getRandomPokemon } from '@/utils/lib'
+import PokemonButton from '@/components/molecules/PokemonButton'
+import PokemonCard from '@/components/organisms/PokemonCard'
+import { WithPageProps } from '@/app/types'
+import { getPokemonList } from '@/utils/cache'
 
-export default async function Page(props: { params: { name: string } }) {
+export default async function Page(props: WithPageProps<{ name: string }>) {
   const {
     params: { name },
   } = props
