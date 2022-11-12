@@ -14,6 +14,7 @@
     "@types/react-dom": "18.0.8",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
+    "jotai": "^1.9.2",
     "lodash": "4.17.21",
     "next": "13.0.3-canary.0",
     "react": "next",

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getNowAsLocaleTimeString } from '../../../../utils/lib'
+import { getNowAsLocalTimeString } from '../../../../utils/cache'
 
 const SectionOne = () => {
   return (
@@ -10,7 +10,7 @@ const SectionOne = () => {
         </button>
       </Link>
       <span className='text-xs font-normal'>
-        Built @ {getNowAsLocaleTimeString()}
+        Built @ {getNowAsLocalTimeString()}
       </span>
     </section>
   )

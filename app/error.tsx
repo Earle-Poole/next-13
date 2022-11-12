@@ -3,15 +3,18 @@
 
 import { use, useEffect } from 'react'
 import { ErrorPageProps } from './types'
-import PokemonButton from './components/atom/PokemonButton'
-import { getPokemonList } from '../utils/lib'
+import PokemonButton from '@/components/molecules/PokemonButton'
+import { getPokemonList } from '@/utils/cache'
+import { getRandomPokemon } from '@/utils/lib'
 
 /**
  *
  * This is a page-level error handler
  */
-const Error = ({ error, reset }: ErrorPageProps) => {
+const Error = (props: ErrorPageProps) => {
+  const { error, reset } = props
   const pokemonList = use(getPokemonList())
+  const randomPokemon = getRandomPokemon(pokemonList)
   useEffect(() => {
     // Log the error to Sentry, or similar
     console.log('The error: ', error)
@@ -22,7 +25,7 @@ const Error = ({ error, reset }: ErrorPageProps) => {
       <p>Something went wrong!</p>
       <button onClick={reset}>Reset error boundary</button>
       <div>
-        <PokemonButton pokemonList={pokemonList} />
+        <PokemonButton pokemon={randomPokemon} />
       </div>
     </div>
   )

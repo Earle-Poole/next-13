@@ -1,6 +1,5 @@
 import { NamedAPIResourceList, Pokemon } from '../app/types'
 import { POKE_API_ROOT } from './constants'
-import { cache } from 'react'
 import capitalize from 'lodash/capitalize'
 
 export async function getPokemonByName(name: string): Promise<Pokemon | null> {
@@ -10,16 +9,6 @@ export async function getPokemonByName(name: string): Promise<Pokemon | null> {
   }
   return response.json()
 }
-
-export const getPokemonList = cache(async (): Promise<NamedAPIResourceList> => {
-  const response = await fetch(POKE_API_ROOT + '?limit=100000&offset=0')
-
-  if (response.status !== 200) {
-    throw new Error(`Failed to fetch pokemon list`)
-  }
-
-  return response.json()
-})
 
 export function decimetersToFeetAndInches(decimeters: number) {
   const inches = Math.round(decimeters * 3.93701)
@@ -32,13 +21,20 @@ export function hectogramsToPounds(hectograms: number) {
   return Math.round(hectograms / 4.536)
 }
 
-let localTime: string
-export const getNowAsLocaleTimeString = cache(() => {
-  if (!localTime) {
-    const now = new Date()
+export function isServer() {
+  return typeof window === 'undefined'
+}
 
-    localTime = now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago' })
-  }
+export function getRandomPokemon(pokemonList: NamedAPIResourceList) {
+  const randomIndex = Math.floor(Math.random() * pokemonList.results.length)
+  return pokemonList.results[randomIndex]
+}
 
-  return localTime
-})
+/**
+ * This is a workaround for TypeScript to allow us to use async components within client components.
+ */
+export function asyncComponent<T, R>(
+  fn: (arg: T) => Promise<R>
+): (arg: T) => R {
+  return fn as (arg: T) => R
+}
