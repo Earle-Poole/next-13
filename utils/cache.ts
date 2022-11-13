@@ -64,7 +64,17 @@ export interface Topic {
   new_featured: boolean
   permalink: string
   amp_permalink: string
-  primary_image: {}
+  primary_image?: {
+    id: string
+    alt_text: string
+    blurred_data: string
+    caption: { blocks: [][]; entityMap: [] }
+    source: string
+    base_image_url: string
+    crops: { '1x1': {}[]; '4x3': {}[]; '16x9': {}[] }
+    embed: boolean
+    is_animated: boolean
+  }
   social_image: null
   og_headline: string
   og_description: string

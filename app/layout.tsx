@@ -8,7 +8,7 @@ const RootLayout = async (props: LayoutPageProps) => {
   await getPokemonList()
   const { children } = props
   return (
-    <html lang='en' className='max-h-screen'>
+    <html lang='en' className='max-h-screen overflow-hidden'>
       <body className='bg-black text-gray-100 min-h-screen max-h-screen h-screen flex flex-col'>
         <Header />
         {children}
