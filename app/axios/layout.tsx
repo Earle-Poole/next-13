@@ -8,7 +8,7 @@ const Layout = async ({ children }: LayoutPageProps) => {
   const content = await getContent()
 
   return (
-    <div className='flex flex-1'>
+    <div className='flex flex-1 min-h-[calc(100%-64px) max-h-[calc(100%-64px)] w-screen relative'>
       <Drawer>
         {content.results.map((id: string) => {
           return <ArticleRow key={id} id={id} />
