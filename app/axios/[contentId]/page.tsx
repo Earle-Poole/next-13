@@ -8,10 +8,9 @@ export default async function Page(props: {
 }) {
   const { contentId } = props.params
   const topic = await getContentByID(contentId)
-  console.log('topic', topic)
 
   return (
-    <main className='max-h-[calc(100%-2.125rem)] overflow-auto'>
+    <main className=''>
       <section className='max-w-7xl flex flex-1 items-center justify-center flex-col gap-4 p-4 relative'>
         {topic.primary_image ? (
           <Image
