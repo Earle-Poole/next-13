@@ -44,12 +44,18 @@ export const getContent = cache(async () => {
   return response.json() as unknown as GetContentsResponse
 })
 
+interface Author {
+  username: string
+  display_name: string
+  subscription: null
+}
+
 export interface Topic {
   slug: string
   id: string
   headline: string
   seo_headline: string
-  authors: {}[]
+  authors: Author[]
   byline_photo: string
   published_date: string
   last_published: string
