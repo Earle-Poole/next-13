@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getNowAsLocalTimeString } from '../../../../utils/cache'
+import { getNowAsLocalTimeString } from '@/utils/cache'
 
 const SectionOne = () => {
   return (
@@ -17,3 +17,4 @@ const SectionOne = () => {
 }
 
 export default SectionOne
+export const revalidate = 1

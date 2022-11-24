@@ -1,5 +1,3 @@
-'use client'
-
 const Page = () => {
   return (
     <div className='flex flex-1 items-center justify-center flex-col gap-4'>
