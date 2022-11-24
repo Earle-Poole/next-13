@@ -17,4 +17,3 @@ const SectionOne = () => {
 }
 
 export default SectionOne
-export const revalidate = 1
