@@ -2,29 +2,20 @@ import { NamedAPIResourceList } from '../app/types'
 import { POKE_API_ROOT } from './constants'
 import { cache } from 'react'
 
-let pokemonListCache: Promise<NamedAPIResourceList>
 export const getPokemonList = cache(async (): Promise<NamedAPIResourceList> => {
-  if (!pokemonListCache) {
-    const response = await fetch(POKE_API_ROOT + '?limit=100000&offset=0')
+  const response = await fetch(POKE_API_ROOT + '?limit=100000&offset=0')
 
-    if (response.status !== 200) {
-      throw new Error(`Failed to fetch pokemon list`)
-    }
-
-    pokemonListCache = response.json()
+  if (response.status !== 200) {
+    throw new Error(`Failed to fetch pokemon list`)
   }
-  return pokemonListCache
+
+  return response.json()
 })
 
-let localTime: string
 export const getNowAsLocalTimeString = cache(() => {
-  if (!localTime) {
-    const now = new Date()
+  const now = new Date()
 
-    localTime = now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago' })
-  }
-
-  return localTime
+  return now.toLocaleTimeString('en-US', { timeZone: 'America/Chicago' })
 })
 
 interface GetContentsResponse {
