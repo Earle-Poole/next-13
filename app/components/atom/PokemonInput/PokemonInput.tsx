@@ -27,7 +27,7 @@ const PokemonInput = () => {
       <input
         className='text-black p-2 rounded'
         type='text'
-        name={POKEMON_NAME}></input>{' '}
+        id={POKEMON_NAME}></input>{' '}
       <button
         className='bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded'
         type='submit'>
