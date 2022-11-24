@@ -1,5 +1,5 @@
+import { getContentByID, getNowAsLocalTimeString } from '@/utils/cache'
 import Image from 'next/image'
-import { getContentByID } from '@/utils/cache'
 
 export default async function Page(props: {
   params: {
@@ -10,7 +10,10 @@ export default async function Page(props: {
   const topic = await getContentByID(contentId)
 
   return (
-    <main className=''>
+    <main className='relative'>
+      <span className='text-xs font-normal absolute top-1 left-1'>
+        Built @ {getNowAsLocalTimeString()}
+      </span>
       <section className='max-w-7xl flex flex-1 items-center justify-center flex-col gap-4 p-4 relative'>
         {topic.primary_image ? (
           <Image
