@@ -1,3 +1,4 @@
+// dynamic routes
 import { getContentByID, getNowAsLocalTimeString } from '@/utils/cache'
 import Image from 'next/image'
 
