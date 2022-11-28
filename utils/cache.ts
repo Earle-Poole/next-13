@@ -1,5 +1,5 @@
+import { BlockTypes, POKE_API_ROOT } from './constants'
 import { NamedAPIResourceList } from '../app/types'
-import { POKE_API_ROOT } from './constants'
 import { cache } from 'react'
 
 export const getPokemonList = cache(async (): Promise<NamedAPIResourceList> => {
@@ -92,7 +92,17 @@ export interface Topic {
   homepage_unit_title: boolean
   needs_redirect: boolean
   is_paywalled: boolean
-  blocks: {}
+  blocks: {
+    blocks: {
+      key: string
+      text: string
+      type: BlockTypes
+      depth: number
+      inlineStyleRanges: []
+      entityRanges: []
+      data: {}[]
+    }[]
+  }
 }
 export const getContentByID = cache(async (id: string): Promise<Topic> => {
   const url = `https://api.axios.com/api/render/content/${id}`

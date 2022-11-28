@@ -19,13 +19,6 @@ const ArticleRow = (props: ArticleRowProps) => {
 
   const pathname = usePathname()
   const urlMatchesPathname = URL === pathname
-  // const contentIdFromPathname = pathname
-  //   ?.split('/')
-  //   .find((str) =>
-  //     str?.match(
-  //       /\w([0-9a-f]{7})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{4})-([0-9a-f]{12})+/g
-  //     )
-  //   )
 
   return (
     <Link
