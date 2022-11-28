@@ -50,6 +50,5 @@ svg {
 }
 
 [data-nextjs-scroll-focus-boundary] {
-  height: 100%;
-  width: 100%;
+  display: contents;
 }

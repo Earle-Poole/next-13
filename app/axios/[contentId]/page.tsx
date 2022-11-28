@@ -1,4 +1,4 @@
-// dynamic routes
+// dynamic routes will not cache
 import { getContentByID, getNowAsLocalTimeString } from '@/utils/cache'
 import Image from 'next/image'
 

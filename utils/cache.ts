@@ -24,7 +24,7 @@ interface GetContentsResponse {
   previous: string | null
   results: string[]
 }
-export const getContent = cache(async () => {
+export const getContent = cache(async (): Promise<GetContentsResponse> => {
   const url = 'https://api.axios.com/api/render/stream/content'
   const response = await fetch(url)
 
@@ -32,7 +32,7 @@ export const getContent = cache(async () => {
     throw new Error(`Failed to fetch content from ${url}`)
   }
 
-  return response.json() as unknown as GetContentsResponse
+  return response.json()
 })
 
 interface Author {
@@ -94,7 +94,7 @@ export interface Topic {
   is_paywalled: boolean
   blocks: {}
 }
-export const getContentByID = cache(async (id: string) => {
+export const getContentByID = cache(async (id: string): Promise<Topic> => {
   const url = `https://api.axios.com/api/render/content/${id}`
   const response = await fetch(url)
 
@@ -102,5 +102,5 @@ export const getContentByID = cache(async (id: string) => {
     throw new Error(`Failed to fetch content from ${url}`)
   }
 
-  return response.json() as unknown as Topic
+  return response.json()
 })
