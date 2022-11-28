@@ -106,7 +106,7 @@ export interface Topic {
 }
 export const getContentByID = cache(async (id: string): Promise<Topic> => {
   const url = `https://api.axios.com/api/render/content/${id}`
-  const response = await fetch(url)
+  const response = await fetch(url, { next: { revalidate: 15 } })
 
   if (response.status !== 200) {
     throw new Error(`Failed to fetch content from ${url}`)
