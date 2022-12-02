@@ -1,7 +1,7 @@
 'use client'
 import Button from '../../atom/Button'
 import Link from 'next/link'
-import { NamedAPIResource } from '../../../types'
+import { NamedAPIResource } from 'global'
 
 const PokemonButton = ({ pokemon }: { pokemon: NamedAPIResource }) => {
   return (

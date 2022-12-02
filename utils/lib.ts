@@ -1,4 +1,4 @@
-import { NamedAPIResourceList, Pokemon } from '../app/types'
+import { NamedAPIResourceList, Pokemon } from 'global'
 import { POKE_API_ROOT } from './constants'
 import capitalize from 'lodash/capitalize'
 

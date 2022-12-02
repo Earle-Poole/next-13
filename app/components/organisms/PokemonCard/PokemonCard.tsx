@@ -4,7 +4,7 @@ import {
   hectogramsToPounds,
 } from '../../../../utils/lib'
 import Image from 'next/image'
-import { Pokemon } from '../../../types'
+import { Pokemon } from 'global'
 import { capitalize } from 'lodash'
 import { useEffect } from 'react'
 

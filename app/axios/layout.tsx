@@ -1,6 +1,6 @@
 import ArticleRow from '@/components/molecules/ArticleRow/ArticleRow.server'
 import Drawer from '@/components/organisms/Drawer'
-import { LayoutPageProps } from '@/app/types'
+import { LayoutPageProps } from 'global'
 import React from 'react'
 import { getContent } from '@/utils/cache'
 

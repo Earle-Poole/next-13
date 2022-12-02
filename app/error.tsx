@@ -2,7 +2,7 @@
 // Error pages must be client components
 
 import { use, useEffect } from 'react'
-import { ErrorPageProps } from './types'
+import { ErrorPageProps } from 'global'
 import PokemonButton from '@/components/molecules/PokemonButton'
 import { getPokemonList } from '@/utils/cache'
 import { getRandomPokemon } from '@/utils/lib'
