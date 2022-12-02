@@ -15,7 +15,9 @@ export const getPokemonList = cache(async (): Promise<NamedAPIResourceList> => {
 export const getNowAsLocalTimeString = cache(() => {
   const now = new Date()
 
-  return `${now.toDateString()} ${now.toLocaleTimeString()}`
+  return `${now.toDateString()} ${now.toLocaleTimeString('en-US', {
+    timeZone: 'America/Chicago',
+  })} CST`
 })
 
 export const getContent = cache(async (): Promise<GetContentsResponse> => {
