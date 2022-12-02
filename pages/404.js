@@ -8,7 +8,7 @@ const Custom404 = () => {
   }, [router])
   return (
     <div className='bg-black'>
-      <h1>404 - Page Not Found</h1>
+      <h1>Taking you back home.</h1>
     </div>
   )
 }

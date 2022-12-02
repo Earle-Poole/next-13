@@ -21,3 +21,9 @@ export default async function Page(props: WithPageProps<{ name: string }>) {
     </div>
   )
 }
+
+export async function generateStaticParams() {
+  const preloadedPokemon = ['pikachu', 'charmander', 'squirtle', 'bulbasaur']
+
+  return preloadedPokemon.map((name) => ({ name }))
+}

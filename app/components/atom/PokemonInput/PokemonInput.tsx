@@ -17,7 +17,7 @@ const PokemonInput = () => {
     const inputValue = target[POKEMON_NAME].value.toLocaleLowerCase()
     const cleanInputValue = inputValue.replace(/[^a-z]/g, '')
 
-    router.push(cleanInputValue)
+    router.push('/pokemon/' + cleanInputValue)
   }
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col gap-2'>
