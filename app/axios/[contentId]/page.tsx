@@ -1,5 +1,9 @@
 // dynamic routes will not cache
-import { getContentByID, getNowAsLocalTimeString } from '@/utils/cache'
+import {
+  getContent,
+  getContentByID,
+  getNowAsLocalTimeString,
+} from '@/utils/cache'
 import { BlockTypes } from '@/utils/constants'
 import Image from 'next/image'
 
@@ -55,4 +59,12 @@ export default async function Page(props: {
       </article>
     </main>
   )
+}
+
+export async function generateStaticParams() {
+  const content = await getContent()
+
+  return content.results.map((id) => ({
+    contentId: id,
+  }))
 }
