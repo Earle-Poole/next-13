@@ -65,16 +65,18 @@ interface Topic {
   needs_redirect: boolean
   is_paywalled: boolean
   blocks: {
-    blocks: {
-      key: string
-      text: string
-      type: BlockTypes
-      depth: number
-      inlineStyleRanges: []
-      entityRanges: []
-      data: {}[]
-    }[]
+    blocks: Block[]
   }
+}
+
+export interface Block {
+  key: string
+  text: string
+  type: BlockTypes
+  depth: number
+  inlineStyleRanges: []
+  entityRanges: []
+  data: {}[]
 }
 
 export interface NamedAPIResource {

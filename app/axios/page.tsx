@@ -3,8 +3,36 @@ import {
   getContentByID,
   getNowAsLocalTimeString,
 } from '@/utils/cache'
+import { Block } from 'global'
 import { BlockTypes } from '@/utils/constants'
 import Image from 'next/image'
+
+const renderBlocks = (blocks: Array<Block>) => {
+  return blocks.map((block) => {
+    switch (block.type) {
+      case BlockTypes.H2:
+        return (
+          <h2 key={block.key} className={'py-2 text-2xl'}>
+            {block.text}
+          </h2>
+        )
+      case BlockTypes.LI:
+        return (
+          <li key={block.key} className={'pb-2'}>
+            {block.text}
+          </li>
+        )
+      case BlockTypes.KEEP_READING:
+        return
+      default:
+        return (
+          <p key={block.key} className={'pb-2'}>
+            {block.text}
+          </p>
+        )
+    }
+  })
+}
 
 const Page = async () => {
   const content = await getContent()
@@ -26,30 +54,7 @@ const Page = async () => {
         ) : null}
         <section>
           <h1 className='text-4xl mb-8'>{topic.headline}</h1>
-          {topic.blocks.blocks.map((block) => {
-            switch (block.type) {
-              case BlockTypes.H2:
-                return (
-                  <h2 key={block.key} className={'py-2 text-2xl'}>
-                    {block.text}
-                  </h2>
-                )
-              case BlockTypes.LI:
-                return (
-                  <li key={block.key} className={'pb-2'}>
-                    {block.text}
-                  </li>
-                )
-              case BlockTypes.KEEP_READING:
-                return
-              default:
-                return (
-                  <p key={block.key} className={'pb-2'}>
-                    {block.text}
-                  </p>
-                )
-            }
-          })}
+          {renderBlocks(topic.blocks.blocks)}
         </section>
       </article>
     </main>

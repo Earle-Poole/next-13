@@ -1,8 +1,12 @@
-import { getNowAsLocalTimeString, getPokemonList } from '@/utils/cache'
-import { getPokemonByName, getRandomPokemon } from '@/utils/lib'
+import {
+  getNowAsLocalTimeString,
+  getPokemonByName,
+  getPokemonList,
+} from '@/utils/cache'
 import PokemonButton from '@/components/molecules/PokemonButton'
 import PokemonCard from '@/components/organisms/PokemonCard'
 import { WithPageProps } from 'global'
+import { getRandomPokemon } from '@/utils/lib'
 
 export default async function Page(props: WithPageProps<{ name: string }>) {
   const {

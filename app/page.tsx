@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getPokemonList } from '@/utils/cache'
 
 const Page = async () => {
-  await getPokemonList() // Adding this to see if
+  await getPokemonList()
 
   return (
     <div className='w-screen flex flex-1 items-center justify-center flex-col gap-4 p-8'>
