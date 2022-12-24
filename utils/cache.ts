@@ -25,6 +25,10 @@ export const getPokemonList = cache(async (): Promise<NamedAPIResourceList> => {
   return response.json()
 })
 
+/**
+ * Retrieves the current date and time as a string in the America/Chicago timezone.
+ * @return {string} - The current date and time as a string in the America/Chicago timezone.
+ */
 export const getNowAsLocalTimeString = cache(() => {
   const now = new Date()
 
@@ -52,11 +56,9 @@ export const getContent = cache(async (): Promise<GetContentsResponse> => {
 })
 
 /**
- * The getContentByID function is an async function that takes an ID as an argument, makes a request to the Axios API to fetch content with the specified ID, and returns a Promise that resolves with the fetched content.
- *
- * The function uses the cache function to cache the results of the request, so that if the function is called with the same ID multiple times, it will return the cached result instead of making a new request to the API. This can improve the performance of the function, as it avoids making unnecessary requests to the API.
- *
- * If the request to the API fails or the response has a non-200 status code, the function throws an error with a message that indicates the URL of the failed request.
+ * Retrieves content by ID.
+ * @param {string} id - The ID of the content to retrieve.
+ * @return {Promise<Topic>} The content with the specified ID.
  */
 export const getContentByID = cache(async (id: string): Promise<Topic> => {
   const url = `https://api.axios.com/api/render/content/${id}`
@@ -69,6 +71,11 @@ export const getContentByID = cache(async (id: string): Promise<Topic> => {
   return response.json()
 })
 
+/**
+ * Retrieves a Pokemon by name.
+ * @param {string} name - The name of the Pokemon to retrieve.
+ * @return {Promise<Pokemon | null>} A promise that resolves with the Pokemon with the specified name, or null if not found.
+ */
 export async function getPokemonByName(name: string): Promise<Pokemon | null> {
   const response = await fetch(POKE_API_ROOT + `/${name}`)
   if (response.status !== 200) {

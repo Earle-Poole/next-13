@@ -49,7 +49,3 @@ svg {
   shape-rendering: auto;
   text-rendering: optimizeLegibility;
 }
-
-[data-nextjs-scroll-focus-boundary] {
-  display: contents;
-}
