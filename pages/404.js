@@ -1,3 +1,5 @@
+import React from "react"
+
 const Custom404 = () => {
   return (
     <div className='w-screen flex flex-1 items-center justify-center flex-col gap-4'>
