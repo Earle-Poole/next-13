@@ -13,6 +13,9 @@ const Page = async () => {
       <Link href='/pokemon'>
         <Button title='Pokemon'>Pokémon</Button>
       </Link>
+      <Link href='/events'>
+        <Button title='Events'>Event Board</Button>
+      </Link>
     </div>
   )
 }

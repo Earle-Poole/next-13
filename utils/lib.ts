@@ -25,7 +25,7 @@ z * @param {NamedAPIResourceList} pokemonList - A list of Pokemon.
  */
 export function getRandomPokemon(pokemonList: NamedAPIResourceList) {
   const randomIndex = Math.floor(Math.random() * pokemonList.results.length)
-  return pokemonList.results[randomIndex]
+  return pokemonList.results[randomIndex] || null
 }
 
 /**
@@ -37,4 +37,12 @@ export function asyncComponent<T, R>(
 ): (arg: T) => R {
   // Return the wrapped function
   return fn as (arg: T) => R
+}
+
+export function generateUUID() {
+  return '3xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g, function(char) {
+    const random16Bits = (Math.random() * 16) | 0
+    const value = char === 'x' ? random16Bits : (random16Bits & 0x3) | 0x8
+    return value.toString(16)
+  })
 }

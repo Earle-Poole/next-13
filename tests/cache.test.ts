@@ -1,58 +1,17 @@
+import { getPokemonList } from './../utils/cache';
 import {
   getContent,
   getContentByID,
   getNowAsLocalTimeString,
 } from '@/utils/cache'
-import { BlockTypes } from '@/utils/constants'
+import { getContentByIDMockResponse, getContentMockResponse, getPokemonListResponse } from './mocks/cache'
+import { setupFetchStub } from './utils'
 
-function setupFetchStub(data: any) {
-  return function fetchStub(_url: RequestInfo | URL) {
-    return new Promise((resolve) => {
-      resolve({
-        status: 200,
-        json: () => Promise.resolve(data),
-      })
-    }) as unknown as Promise<Response>
-  }
-}
-
-function setupGlobalFetch(data: any) {
-  global.fetch = jest.fn().mockImplementation(setupFetchStub(data))
-}
-
-afterAll(() => {
-  // @ts-ignore
-  global.fetch.mockClear()
-  // @ts-ignore
-  delete global.fetch
+beforeAll(() => {
+  global.fetch = () => new Promise(() => { })
 })
 
-const getContentMockResponse = {
-  results: [
-    {
-      id: '123',
-      headline: 'Test Headline',
-      blocks: {
-        blocks: [
-          {
-            type: BlockTypes.H2,
-            key: '456',
-            text: 'Test H2',
-          },
-          {
-            type: BlockTypes.LI,
-            key: '789',
-            text: 'Test LI',
-          },
-        ],
-      },
-    },
-  ],
-}
-
 describe('getContent', () => {
-  setupGlobalFetch(getContentMockResponse)
-
   it('should return the content from the API', async () => {
     // Set up a mock for the fetch function
     // that returns a successful response with the
@@ -82,20 +41,8 @@ describe('getContent', () => {
   })
 })
 
-const getContentByIDMockResponse = {
-  id: '12345',
-  headline: 'This is an example headline',
-  blocks: [
-    {
-      type: 'H2',
-      key: '123456',
-      text: 'This is an example H2 block',
-    },
-  ],
-}
 
 describe('getContentByID', () => {
-  setupGlobalFetch(getContentByIDMockResponse)
   it('fetches content by ID from the API and returns the expected data', async () => {
     const contentID = '12345'
 
@@ -113,10 +60,20 @@ describe('getContentByID', () => {
 describe('getNowAsLocalTimeString', () => {
   it('returns a string with the current date and time in the America/Chicago time zone', () => {
     const nowString = getNowAsLocalTimeString()
+    const dateISORegExp = /^\w{3} \w{3} \d{2} \d{4} \d{1,2}:\d{2}:\d{2}\u202f{1}\w{2} CST$/
 
     expect(typeof nowString).toBe('string')
-    expect(nowString).toMatch(
-      /^\w{3} \w{3} \d{2} \d{4} \d{1,2}:\d{2}:\d{2} \w{2} CST$/
-    )
+    expect(nowString).toMatch(dateISORegExp)
+  })
+})
+
+
+describe('getPokemonList', () => {
+  it('fetches a list of pokemone from the API', async () => {
+
+    jest.spyOn(global, 'fetch').mockImplementationOnce(setupFetchStub(getPokemonListResponse))
+
+    const content = await getPokemonList()
+    expect(content).toEqual(getPokemonListResponse)
   })
 })

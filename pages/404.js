@@ -1,14 +1,9 @@
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-
 const Custom404 = () => {
-  const router = useRouter()
-  useEffect(() => {
-    router.push('/')
-  }, [router])
   return (
-    <div className='bg-black'>
-      <h1>Taking you back home.</h1>
+    <div className='w-screen flex flex-1 items-center justify-center flex-col gap-4'>
+      <p><strong>404</strong> | Something went wrong</p>
+      <p>Your page was not found!</p>
+      <p>Go back to the <a href='/'>home page</a></p>
     </div>
   )
 }

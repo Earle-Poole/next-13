@@ -18,6 +18,7 @@ export default SectionTwo
 const titleByPathName = new Map([
   ['/axios', 'Axios'],
   ['/pokemon', 'Pokémon'],
+  ['/events', 'Event'],
 ])
 
 const parsePathForTitle = (pathname: string) => {

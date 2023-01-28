@@ -17,6 +17,12 @@ const nextConfig = {
         hostname: 'images.axios.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        port: '',
+        hostname: 'charlotte.axios.com',
+        pathname: '/**',
+      },
     ],
   },
 }
