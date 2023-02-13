@@ -1,4 +1,4 @@
-import { BlockTypes } from './utils/constants'
+import { BlockTypes } from "./utils/constants"
 
 interface GetContentsResponse {
   count: number

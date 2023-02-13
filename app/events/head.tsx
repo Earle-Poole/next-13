@@ -7,7 +7,7 @@ const NextHead = () => {
     <>
       <meta name='viewport' content='width=device-width, initial-scale=1.0' />
       <meta name='description' content='Nested layouts in Next 13' />
-      <title>Next 13 - Event Board</title>
+      <title>Events - Next 13</title>
     </>
   )
 }
