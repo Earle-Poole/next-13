@@ -10,7 +10,7 @@ import { getRandomPokemon } from "@/utils/lib"
 
 type PokemonNamePageProps = WithPageProps<{ name: string }>
 
-export default async function Page(props: PokemonNamePageProps) {
+const Page = async (props: PokemonNamePageProps) => {
   const {
     params: { name },
   } = props
@@ -27,6 +27,8 @@ export default async function Page(props: PokemonNamePageProps) {
     </div>
   )
 }
+
+export default Page
 
 export async function generateStaticParams() {
   const preloadedPokemon = ["pikachu", "charmander", "squirtle", "bulbasaur"]
