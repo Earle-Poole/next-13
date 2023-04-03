@@ -8,7 +8,7 @@ import PokemonCard from "@/components/organisms/PokemonCard"
 import { WithPageProps } from "global"
 import { getRandomPokemon } from "@/utils/lib"
 
-type PokemonNamePageProps = WithPageProps<{ name: string }>
+type PokemonNamePageProps = { params: { name: string } }
 
 const Page = async (props: PokemonNamePageProps) => {
   const {

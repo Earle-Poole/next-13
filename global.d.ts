@@ -40,7 +40,7 @@ interface Topic {
     caption: { blocks: [][]; entityMap: [] }
     source: string
     base_image_url: string
-    crops: { '1x1': {}[]; '4x3': {}[]; '16x9': {}[] }
+    crops: { "1x1": {}[]; "4x3": {}[]; "16x9": {}[] }
     embed: boolean
     is_animated: boolean
   }
