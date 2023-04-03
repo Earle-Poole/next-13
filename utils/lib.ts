@@ -1,4 +1,4 @@
-import { NamedAPIResourceList } from 'global'
+import { NamedAPIResourceList } from "global"
 
 export function decimetersToFeetAndInches(decimeters: number) {
   const inches = Math.round(decimeters * 3.93701)
@@ -12,7 +12,7 @@ export function hectogramsToPounds(hectograms: number) {
 }
 
 export function isServer() {
-  return typeof window === 'undefined'
+  return typeof window === "undefined"
 }
 
 /**
@@ -40,9 +40,20 @@ export function asyncComponent<T, R>(
 }
 
 export function generateUUID() {
-  return '3xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[x]/g, function(char) {
-    const random16Bits = (Math.random() * 16) | 0
-    const value = char === 'x' ? random16Bits : (random16Bits & 0x3) | 0x8
-    return value.toString(16)
-  })
+  return "3xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx".replace(
+    /[x]/g,
+    function (char) {
+      const random16Bits = (Math.random() * 16) | 0
+      const value = char === "x" ? random16Bits : (random16Bits & 0x3) | 0x8
+      return value.toString(16)
+    }
+  )
+}
+
+export const decodeBase64 = (data: string) => {
+  return Buffer.from(data, "base64").toString("ascii")
+}
+
+export const encodeBase64 = (data: string) => {
+  return Buffer.from(data).toString("base64")
 }

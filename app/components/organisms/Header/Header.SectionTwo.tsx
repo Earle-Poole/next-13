@@ -19,14 +19,17 @@ const titleByPathName = new Map([
   ["/axios", "Axios"],
   ["/pokemon", "Pokémon"],
   ["/events", "Event"],
+  ["/chat", "Chat"],
 ])
 
 const parsePathForTitle = (pathname: string) => {
+  let str = "Home"
+
   titleByPathName.forEach((value, key) => {
     if (pathname.includes(key)) {
-      return value
+      str = value
     }
   })
 
-  return "Home"
+  return str
 }

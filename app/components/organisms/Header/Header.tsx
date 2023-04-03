@@ -1,10 +1,10 @@
-import SectionOne from "./Header.SectionOne";
-import SectionThree from "./Header.SectionThree";
-import SectionTwo from "./Header.SectionTwo";
+import SectionOne from "./Header.SectionOne"
+import SectionThree from "./Header.SectionThree"
+import SectionTwo from "./Header.SectionTwo"
 
 const Spacer = () => {
-  return <div className="min-h-[4rem] max-h-[4rem]"></div>;
-};
+  return <div className="min-h-[4rem] max-h-[4rem]"></div>
+}
 
 const Header = () => {
   return (
@@ -16,7 +16,7 @@ const Header = () => {
       </nav>
       <Spacer />
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
