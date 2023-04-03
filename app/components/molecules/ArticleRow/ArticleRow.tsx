@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { Topic } from 'global'
-import classNames from 'classnames'
-import { usePathname } from 'next/navigation'
+import Image from "next/image"
+import Link from "next/link"
+import { Topic } from "global"
+import classNames from "classnames"
+import { usePathname } from "next/navigation"
 
 interface ArticleRowProps {
   topic: Topic
@@ -15,7 +15,7 @@ const ArticleRow = (props: ArticleRowProps) => {
   const URL = `/axios/${topic.id}`
   const parsedAuthors = topic.authors
     .map((author) => author.display_name)
-    .join(', ')
+    .join(", ")
 
   const pathname = usePathname()
   const urlMatchesPathname = URL === pathname
@@ -24,11 +24,12 @@ const ArticleRow = (props: ArticleRowProps) => {
     <Link
       href={URL}
       className={classNames(
-        'bg-white/5 border-2 border-slate-800/50 p-4 hover:bg-white/10 hover:border-slate-800/75 cursor-pointer flex rounded',
+        "bg-white/5 border-2 border-slate-800/50 p-4 hover:bg-white/10 hover:border-slate-800/75 cursor-pointer flex rounded",
         {
-          'border-2 border-slate-800 shadow-lg': urlMatchesPathname,
+          "border-2 border-slate-800 shadow-lg": urlMatchesPathname,
         }
-      )}>
+      )}
+    >
       {topic.primary_image ? (
         <Image
           height={180}
@@ -37,9 +38,9 @@ const ArticleRow = (props: ArticleRowProps) => {
           alt={topic.headline}
         />
       ) : null}
-      <div className='pl-4 flex flex-col justify-between'>
-        <span className='font-bold'>{topic.headline}</span>
-        <div className='italic text-sm text-white/70'>
+      <div className="pl-4 flex flex-col justify-between">
+        <span className="font-bold">{topic.headline}</span>
+        <div className="italic text-sm text-white/70">
           <span>{parsedAuthors}</span>
           <span>{}</span>
         </div>
