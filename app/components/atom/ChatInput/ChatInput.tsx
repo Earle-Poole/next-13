@@ -2,14 +2,14 @@
 
 import { useAtom } from "jotai"
 import Button from "../Button"
-import { chatAtom } from "@/components/stores/ChatStore"
+import { chatAtom, defaultChatAtom } from "@/components/stores/ChatStore"
 import { sendChatCompletionRequest } from "@/utils/api"
 import { ChatCompletionRequestMessageRoleEnum } from "openai"
 import { FormEventHandler } from "react"
 import { IChatCompletionRequest } from "pages/api/chat"
 
 const ChatInput = () => {
-  const [atomValue, setAtomValue] = useAtom(chatAtom)
+  const [chatMessages, setChatMessages] = useAtom(chatAtom)
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
@@ -23,14 +23,14 @@ const ChatInput = () => {
     }
 
     const newMessages = [
-      ...atomValue,
+      ...chatMessages,
       {
         role: ChatCompletionRequestMessageRoleEnum.User,
         content: message.toString(),
       },
     ]
 
-    setAtomValue(newMessages)
+    setChatMessages(newMessages)
     target.reset()
 
     const requestObject: IChatCompletionRequest = {
@@ -48,7 +48,11 @@ const ChatInput = () => {
     ]
 
     // TODO: Handle when `res.choices[0].message` is undefined
-    setAtomValue(newMessagesWithChatResponse)
+    setChatMessages(newMessagesWithChatResponse)
+  }
+
+  const onClear = () => {
+    setChatMessages(defaultChatAtom)
   }
 
   return (
@@ -60,6 +64,7 @@ const ChatInput = () => {
         type="text"
       />
       <Button type="submit">Send</Button>
+      <Button type="button" onClick={onClear}>Clear</Button>
     </form>
   )
 }
