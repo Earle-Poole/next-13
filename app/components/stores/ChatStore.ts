@@ -44,6 +44,7 @@ chatAtom.onMount = () => {
       !("isWaiting" in possiblyInvalid)
     ) {
       localStorage.removeItem(CHAT_KEY)
+      location.reload()
     }
   } catch (e) {
     localStorage.removeItem(CHAT_KEY)
