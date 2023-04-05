@@ -9,7 +9,7 @@ interface ChatStoreType {
   model: ChatModelValues
   isWaiting: boolean
 }
-
+const CHAT_KEY = "chat"
 export const ChatModels = {
   GPT4: "gpt-4-0314",
   GPT4Legacy: "gpt-4",
@@ -31,7 +31,24 @@ export const defaultChatAtom: ChatStoreType = {
 }
 
 // The default state should be a conversation with the chat bot. The first entry will be the user's initial prompt.
-export const chatAtom = atomWithStorage<ChatStoreType>("chat", defaultChatAtom)
+export const chatAtom = atomWithStorage<ChatStoreType>(
+  CHAT_KEY,
+  defaultChatAtom
+)
+chatAtom.onMount = () => {
+  try {
+    const possiblyInvalid = JSON.parse(localStorage.getItem(CHAT_KEY) ?? "{}")
+    if (
+      !("model" in possiblyInvalid) ||
+      !("messages" in possiblyInvalid) ||
+      !("isWaiting" in possiblyInvalid)
+    ) {
+      localStorage.removeItem(CHAT_KEY)
+    }
+  } catch (e) {
+    localStorage.removeItem(CHAT_KEY)
+  }
+}
 
 export type ChatModelValues = typeof ChatModels[keyof typeof ChatModels]
 

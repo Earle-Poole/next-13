@@ -1,4 +1,4 @@
-import styles from "./LoadingIndicator.module.css"
+import styles from "./loadingIndicator.module.css"
 const LoadingIndicator = () => {
   return (
     <svg
