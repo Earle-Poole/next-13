@@ -36,15 +36,19 @@ export const chatAtom = atomWithStorage<ChatStoreType>(
   defaultChatAtom
 )
 chatAtom.onMount = () => {
+  const fromStorage = localStorage.getItem(CHAT_KEY) ?? "{}"
   try {
-    const possiblyInvalid = JSON.parse(localStorage.getItem(CHAT_KEY) ?? "{}")
+    const possiblyInvalid = JSON.parse(fromStorage)
     if (
       !("model" in possiblyInvalid) ||
       !("messages" in possiblyInvalid) ||
       !("isWaiting" in possiblyInvalid)
     ) {
       localStorage.removeItem(CHAT_KEY)
-      location.reload()
+
+      if (fromStorage !== "{}") {
+        location.reload()
+      }
     }
   } catch (e) {
     localStorage.removeItem(CHAT_KEY)
