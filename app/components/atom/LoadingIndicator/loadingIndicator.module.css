@@ -1,0 +1,29 @@
+.spinner_first {
+  animation: spinner_animation 1.05s infinite
+}
+
+.spinner_second {
+  animation-delay: .1s
+}
+
+.spinner_third {
+  animation-delay: .2s
+}
+
+@keyframes spinner_animation {
+
+  0%,
+  57.14% {
+    animation-timing-function: cubic-bezier(0.33, .66, .66, 1);
+    transform: translate(0)
+  }
+
+  28.57% {
+    animation-timing-function: cubic-bezier(0.33, 0, .66, .33);
+    transform: translateY(-6px)
+  }
+
+  100% {
+    transform: translate(0)
+  }
+}

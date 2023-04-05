@@ -42,7 +42,6 @@ const ArticleRow = (props: ArticleRowProps) => {
         <span className="font-bold">{topic.headline}</span>
         <div className="italic text-sm text-white/70">
           <span>{parsedAuthors}</span>
-          <span>{}</span>
         </div>
       </div>
     </Link>

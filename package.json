@@ -17,7 +17,8 @@
     "next": "13.2.4",
     "openai": "^3.2.1",
     "react": "next",
-    "react-dom": "next"
+    "react-dom": "next",
+    "react-select": "^5.7.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.4",

@@ -1,4 +1,10 @@
-import { decodeBase64, encodeBase64 } from "./../../utils/lib"
+import { ChatModels } from "@/components/stores/ChatStore"
+import { ChatModelValues } from "@/components/stores/ChatStore"
+import {
+  TextModelValues,
+  TextModels,
+} from "@/components/stores/TextCompleteStore"
+import { decodeBase64, encodeBase64 } from "@/utils/lib"
 import { NextApiRequest, NextApiResponse } from "next"
 import {
   Configuration,
@@ -90,42 +96,3 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default handler
-
-// enum ChatModels {
-//   GPT4 = "gpt-4-0314",
-//   GPT4Legacy = "gpt-4",
-//   GPTTurbo = "gpt-3.5-turbo-0301",
-//   GPTTurboLegacy = "gpt-3.5-turbo",
-// }
-//
-// enum TextModels {
-//   DAVINCI = "text-davinci-003",
-//   CURIE = "text-curie-001",
-//   BABBAGE = "text-babbage-001",
-//   ADA = "text-ada-001",
-// }
-
-const ChatModels = {
-  GPT4: "gpt-4-0314",
-  GPT4Legacy: "gpt-4",
-  GPTTurbo: "gpt-3.5-turbo-0301",
-  GPTTurboLegacy: "gpt-3.5-turbo",
-} as const
-
-const TextModels = {
-  DAVINCI: "text-davinci-003",
-  CURIE: "text-curie-001",
-  BABBAGE: "text-babbage-001",
-  ADA: "text-ada-001",
-} as const
-
-type ChatModelValues = typeof ChatModels[keyof typeof ChatModels]
-type TextModelValues = typeof TextModels[keyof typeof TextModels]
-
-export interface IChatCompletionRequest extends CreateChatCompletionRequest {
-  model: ChatModelValues
-}
-
-export interface ITextCompletionRequest extends CreateCompletionRequest {
-  model: TextModelValues
-}
