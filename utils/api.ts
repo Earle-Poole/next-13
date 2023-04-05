@@ -1,5 +1,5 @@
+import { ITextCompletionRequest } from "@/components/stores/TextCompleteStore"
 import { CreateChatCompletionResponse } from "openai"
-import { ITextCompletionRequest } from "./../pages/api/chat"
 
 export const sendChatCompletionRequest = async (
   str: string
