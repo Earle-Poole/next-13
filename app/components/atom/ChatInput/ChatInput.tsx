@@ -17,6 +17,7 @@ import {
 import { FormEventHandler, useEffect, useState } from "react"
 import Select from "react-select"
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
+import { encodeBase64 } from "@/utils/lib"
 
 const ChatInput = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -74,13 +75,16 @@ const ChatInput = () => {
       model,
     }
 
-    const encrypted = window.btoa(JSON.stringify(requestObject))
+    const encrypted = encodeBase64(JSON.stringify(requestObject))
 
     setIsWaiting(true)
     try {
+      console.log("hit #1")
       const res = await sendChatCompletionRequest(encrypted)
+      console.log("hit #2")
 
       if (!res.choices[0].message) {
+        console.log("hit #3")
         throw new Error(
           "No message returned from OpenAI, please try again.\nres.choices[0].message was falsy."
         )
@@ -90,6 +94,7 @@ const ChatInput = () => {
         ...newMessages,
         res.choices[0].message,
       ]
+      console.log("hit #4")
 
       setChatMessages(newMessagesWithChatResponse)
     } catch (e) {

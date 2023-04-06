@@ -1,19 +1,25 @@
+import { decodeBase64 } from "./lib"
 import { ITextCompletionRequest } from "@/components/stores/TextCompleteStore"
 import { CreateChatCompletionResponse } from "openai"
 
 export const sendChatCompletionRequest = async (
-  str: string
+  data: string
 ): Promise<CreateChatCompletionResponse> => {
   const response = await fetch("/api/chat", {
     method: "POST",
-    body: JSON.stringify(str),
+    body: JSON.stringify({ data }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
 
   if (response.status !== 200) {
     throw new Error(`Request failed with status ${response.status}`)
   }
 
-  return JSON.parse(window.atob(await response.json()))
+  const text = await response.text()
+  const decodedData = decodeBase64(text)
+  return JSON.parse(decodedData)
 }
 
 export const sendTextCompletionRequest = async (

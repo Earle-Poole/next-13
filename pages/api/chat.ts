@@ -6,12 +6,8 @@ import {
 } from "@/components/stores/TextCompleteStore"
 import { decodeBase64, encodeBase64 } from "@/utils/lib"
 import { NextApiRequest, NextApiResponse } from "next"
-import {
-  Configuration,
-  OpenAIApi,
-  CreateCompletionRequest,
-  CreateChatCompletionRequest,
-} from "openai"
+import { Configuration, OpenAIApi } from "openai"
+import { OpenAIApi as EdgeOpenAIApi } from "openai-edge"
 
 export const config = {
   runtime: "edge",
@@ -23,6 +19,7 @@ const configuration = new Configuration({
 })
 
 const openai = new OpenAIApi(configuration)
+const edgeopenai = new EdgeOpenAIApi(configuration)
 
 /**
  * Handler function for the /api/chat route
@@ -34,24 +31,22 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const enginesResponse = await openai.listEngines()
     const { data: enginesData } = enginesResponse
 
-    res.status(200).json(enginesData)
-    return
+    return new Response(JSON.stringify(enginesData), { status: 200 })
   }
 
-  const { body } = req
+  const body = await new Response(req.body).json()
+  const decodedData = decodeBase64(body.data)
   const parsedBody =
-    typeof body === "string" ? JSON.parse(decodeBase64(body)) : {}
-
-  console.log("parsedBody", parsedBody)
+    typeof body.data === "string" ? JSON.parse(decodedData) : {}
 
   if (req.method !== "POST") {
-    res.status(400).json({ error: "Invalid request method, please use POST." })
-    return
+    return new Response("Invalid request method, please use POST.", {
+      status: 400,
+    })
   }
 
   if (!("model" in parsedBody) || typeof parsedBody.model !== "string") {
-    res.status(400).json({ error: "Missing model parameter" })
-    return
+    return new Response("Missing model parameter", { status: 400 })
   }
 
   const parsedBodyModel: ChatModelValues | TextModelValues = parsedBody.model
@@ -61,16 +56,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     )
 
     if (isTextCompletionRequest) {
-      const textCompletionResponse = await openai.createCompletion({
-        model: parsedBodyModel,
-        prompt: "Respond to this prompt with a short story.",
-        max_tokens: 2048,
-        n: 1,
+      const textCompletionResponse = await (
+        await edgeopenai.createCompletion({
+          model: parsedBodyModel,
+          prompt: "Respond to this prompt with a short story.",
+          max_tokens: 2048,
+          n: 1,
+        })
+      ).json()
+
+      return new Response(JSON.stringify(textCompletionResponse), {
+        status: 200,
       })
-      const { data: textCompletionData } = textCompletionResponse
-      console.log("textCompletionData", textCompletionData)
-      res.status(200).json({ textCompletionData })
-      return
     }
 
     const isChatCompletionRequest = Object.values(ChatModels).includes(
@@ -78,21 +75,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     )
 
     if (isChatCompletionRequest) {
-      const chatCompletionResponse = await openai.createChatCompletion({
-        model: parsedBodyModel,
-        temperature: 0.7,
-        messages: parsedBody.messages,
-      })
-      const { data: chatCompletionData } = chatCompletionResponse
+      const chatCompletionResponse = await (
+        await edgeopenai.createChatCompletion({
+          model: parsedBodyModel,
+          temperature: 0.7,
+          messages: parsedBody.messages,
+        })
+      ).json()
 
-      const encrypted = encodeBase64(JSON.stringify(chatCompletionData))
-      res.status(200).json(encrypted)
-      return
+      const encrypted = encodeBase64(JSON.stringify(chatCompletionResponse))
+      return new Response(encrypted, { status: 200 })
     }
   } catch (e) {
     // TODO: Properly handle errors, pop off last user message, or add a message to the chat bot
     console.error("Could not access OpenAI, please try again.\n\nError: ", e)
-    res.status(500).json({ error: e })
+    return new Response("Could not access OpenAI, please try again.", {
+      status: 500,
+    })
   }
 }
 

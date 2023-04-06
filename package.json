@@ -16,6 +16,7 @@
     "lodash": "4.17.21",
     "next": "13.2.4",
     "openai": "^3.2.1",
+    "openai-edge": "^0.5.1",
     "react": "next",
     "react-dom": "next",
     "react-markdown": "^8.0.6",

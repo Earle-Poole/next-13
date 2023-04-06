@@ -4404,6 +4404,11 @@ open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
+openai-edge@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/openai-edge/-/openai-edge-0.5.1.tgz#d71dd95476f7a1772cda137ba6d134bee94ba8e3"
+  integrity sha512-/Q/b9wkPKWIzcnsp2o0Of5QW/t4A0XLw+E7rjVSYR3gLVt+pWpFuWCgWPWUVS1UrrLJPvzmndwe1JMpfqLRJIQ==
+
 openai@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/openai/-/openai-3.2.1.tgz#1fa35bdf979cbde8453b43f2dd3a7d401ee40866"

@@ -50,10 +50,10 @@ export function generateUUID() {
   )
 }
 
-export const decodeBase64 = (data: string) => {
-  return Buffer.from(data, "base64").toString("ascii")
+export const decodeBase64 = (data: string): string => {
+  return atob(data)
 }
 
-export const encodeBase64 = (data: string) => {
-  return Buffer.from(data).toString("base64")
+export const encodeBase64 = (data: string): string => {
+  return btoa(data)
 }
