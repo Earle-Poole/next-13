@@ -35,11 +35,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const { body } = req
-  console.log("body: ", body)
   const parsedBody =
-    typeof body === "string"
-      ? JSON.parse(decodeBase64(JSON.stringify(body)))
-      : {}
+    typeof body === "string" ? JSON.parse(decodeBase64(body)) : {}
 
   if (req.method !== "POST") {
     res.status(400).json({ error: "Invalid request method, please use POST." })
@@ -81,7 +78,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         messages: parsedBody.messages,
       })
       const { data: chatCompletionData } = chatCompletionResponse
-      console.log("chatCompletionData: ", chatCompletionData)
 
       const encrypted = encodeBase64(JSON.stringify(chatCompletionData))
       res.status(200).json(encrypted)
