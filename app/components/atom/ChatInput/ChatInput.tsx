@@ -79,12 +79,9 @@ const ChatInput = () => {
 
     setIsWaiting(true)
     try {
-      console.log("hit #1")
       const res = await sendChatCompletionRequest(encrypted)
-      console.log("hit #2")
 
       if (!res.choices[0].message) {
-        console.log("hit #3")
         throw new Error(
           "No message returned from OpenAI, please try again.\nres.choices[0].message was falsy."
         )
@@ -94,7 +91,6 @@ const ChatInput = () => {
         ...newMessages,
         res.choices[0].message,
       ]
-      console.log("hit #4")
 
       setChatMessages(newMessagesWithChatResponse)
     } catch (e) {
