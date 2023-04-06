@@ -42,6 +42,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const parsedBody =
     typeof body === "string" ? JSON.parse(decodeBase64(body)) : {}
 
+  console.log("parsedBody", parsedBody)
+
   if (req.method !== "POST") {
     res.status(400).json({ error: "Invalid request method, please use POST." })
     return

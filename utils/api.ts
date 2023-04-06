@@ -9,6 +9,10 @@ export const sendChatCompletionRequest = async (
     body: JSON.stringify(str),
   })
 
+  if (response.status !== 200) {
+    throw new Error(`Request failed with status ${response.status}`)
+  }
+
   return JSON.parse(window.atob(await response.json()))
 }
 
