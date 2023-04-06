@@ -13,6 +13,10 @@ import {
   CreateChatCompletionRequest,
 } from "openai"
 
+export const config = {
+  runtime: "edge",
+}
+
 const configuration = new Configuration({
   organization: "org-oxy4ydBZDsiyT71nD4KiFVBC",
   apiKey: process.env.OPENAI_SECRET,
@@ -85,10 +89,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   } catch (e) {
     // TODO: Properly handle errors, pop off last user message, or add a message to the chat bot
-    console.error(
-      "An error occurred while accessing OpenAI, please try again.\n\nError: ",
-      e
-    )
+    console.error("Could not access OpenAI, please try again.\n\nError: ", e)
     res.status(500).json({ error: e })
   }
 }
