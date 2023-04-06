@@ -80,6 +80,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         messages: parsedBody.messages,
       })
       const { data: chatCompletionData } = chatCompletionResponse
+      console.log("chatCompletionData: ", chatCompletionData)
 
       const encrypted = encodeBase64(JSON.stringify(chatCompletionData))
       res.status(200).json(encrypted)
