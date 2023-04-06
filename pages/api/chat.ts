@@ -35,6 +35,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const { body } = req
+  console.log("body: ", body)
   const parsedBody =
     typeof body === "string"
       ? JSON.parse(decodeBase64(JSON.stringify(body)))
