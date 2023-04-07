@@ -14,8 +14,8 @@ export const config = {
 }
 
 const configuration = new Configuration({
-  organization: "org-oxy4ydBZDsiyT71nD4KiFVBC",
   apiKey: process.env.OPENAI_SECRET,
+  organization: "org-oxy4ydBZDsiyT71nD4KiFVBC",
 })
 
 const openai = new OpenAIApi(configuration)
