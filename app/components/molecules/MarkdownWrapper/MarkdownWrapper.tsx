@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import { FC, PropsWithChildren, lazy } from "react"
-import { darcula } from "react-syntax-highlighter/dist/cjs/styles/hljs"
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
 
 const ReactMarkdown = lazy(() => import("react-markdown"))
 const SyntaxHighlighter = lazy(
@@ -37,8 +37,11 @@ const MarkdownWrapper: FC<PropsWithChildren<{ content: string }>> = ({
             <SyntaxHighlighter
               {...props}
               children={String(children).replace(/\n$/, "")}
-              style={darcula}
-              className={classNames("w-fit rounded !m-4", className)}
+              style={oneDark}
+              className={classNames(
+                "w-auto rounded !m-4 whitespace-pre-wrap",
+                className
+              )}
               language={match?.[1]}
               PreTag="div"
             />

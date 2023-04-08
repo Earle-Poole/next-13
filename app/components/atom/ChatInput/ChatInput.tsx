@@ -15,7 +15,7 @@ import {
   CreateChatCompletionResponse,
   CreateChatCompletionResponseChoicesInner,
 } from "openai"
-import { FormEventHandler, useEffect, useState } from "react"
+import { FormEventHandler, useEffect, useRef, useState } from "react"
 import Select from "react-select"
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
 import { fetchEventSource } from "@microsoft/fetch-event-source"
@@ -37,10 +37,10 @@ const ChatInput = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [{ messages, model, isWaiting }, setChatStore] = useAtom(chatAtom)
   const [streamResponse, setStreamResponse] = useAtom(streamAtom)
-  const ctrl = new AbortController()
+  const ctrl = useRef(new AbortController())
 
-  const setChatMessages = (newMessages: ChatCompletionResponseMessage[]) => {
-    setChatStore((prev) => ({ ...prev, messages: newMessages }))
+  const setChatMessages = (messages: ChatCompletionResponseMessage[]) => {
+    setChatStore((prev) => ({ ...prev, messages }))
   }
 
   const setChatModel = (model: ChatModelValues) => {
@@ -100,10 +100,13 @@ const ChatInput = () => {
         },
         body: JSON.stringify(requestObject),
         openWhenHidden: true,
-        signal: ctrl.signal,
+        signal: ctrl.current.signal,
         async onopen(response) {
           setStreamResponse("")
           setIsWaiting(false)
+          if (ctrl.current.signal.aborted) {
+            ctrl.current = new AbortController()
+          }
           if (
             response.ok &&
             response.headers.get("content-type")?.replace(/ /g, "") ===
@@ -128,6 +131,9 @@ const ChatInput = () => {
         onmessage(msg) {
           // TODO: If the server emits an error message, throw an exception
           // so it gets handled by the onerror callback below:
+          if (ctrl.current.signal.aborted) {
+            throw new FatalError(ctrl.current.signal.reason)
+          }
           if (msg.event === "FatalError") {
             throw new FatalError(msg.data)
           }
@@ -143,7 +149,7 @@ const ChatInput = () => {
             setStreamResponse((prev) => (newContent ? prev + newContent : prev))
           } catch (error) {
             console.log("Aborting stream...")
-            ctrl.abort()
+            ctrl.current.abort(error)
           }
         },
         onclose() {
@@ -157,11 +163,11 @@ const ChatInput = () => {
           })
         },
         onerror(err: Error) {
-          if (err instanceof Error) {
+          if (err instanceof FatalError) {
             console.log("onerror fatal", err)
             // rethrow to stop the operation
+            throw err
             // setAwaitingFirstToken(false)
-            // setStreaming(false)
             // setError(`Something went wrong with the request`)
             // throw err
           } else {
@@ -185,7 +191,10 @@ const ChatInput = () => {
       setIsWaiting(false)
     }
 
-    ctrl.abort()
+    if (streamResponse) {
+      setStreamResponse("")
+    }
+    ctrl.current.abort("User cleared chat")
   }
 
   // This will avoid server vs client mismatch
