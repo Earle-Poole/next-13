@@ -9,25 +9,35 @@ import {
   chatAtom,
   defaultChatAtom,
 } from "@/components/stores/ChatStore"
-import { sendChatCompletionRequest } from "@/utils/api"
 import {
   ChatCompletionRequestMessageRoleEnum,
   ChatCompletionResponseMessage,
+  CreateChatCompletionResponse,
+  CreateChatCompletionResponseChoicesInner,
 } from "openai"
-import { FormEventHandler, useEffect, useRef, useState } from "react"
+import { FormEventHandler, useEffect, useState } from "react"
 import Select from "react-select"
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
-import { encodeBase64 } from "@/utils/lib"
 import { fetchEventSource } from "@microsoft/fetch-event-source"
 import { HEADERS_STREAM } from "pages/api/chat-stream"
+import { streamAtom } from "@/components/stores/StreamStore"
 
 class RetriableError extends Error {}
 class FatalError extends Error {}
 
+interface ExtendedCreateChatCompletionResponseChoicesInner
+  extends CreateChatCompletionResponseChoicesInner {
+  delta: { content?: string }
+}
+interface ExtendedCreateChatCompletionResponse
+  extends CreateChatCompletionResponse {
+  choices: [ExtendedCreateChatCompletionResponseChoicesInner]
+}
 const ChatInput = () => {
-  const answerNode = useRef<HTMLElement>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [{ messages, model, isWaiting }, setChatStore] = useAtom(chatAtom)
+  const [streamResponse, setStreamResponse] = useAtom(streamAtom)
+  const ctrl = new AbortController()
 
   const setChatMessages = (newMessages: ChatCompletionResponseMessage[]) => {
     setChatStore((prev) => ({ ...prev, messages: newMessages }))
@@ -81,11 +91,8 @@ const ChatInput = () => {
       model,
     }
 
-    const encrypted = encodeBase64(JSON.stringify(requestObject))
-
     setIsWaiting(true)
     try {
-      const ctrl = new AbortController()
       fetchEventSource("/api/chat-stream", {
         method: "POST",
         headers: {
@@ -95,19 +102,19 @@ const ChatInput = () => {
         openWhenHidden: true,
         signal: ctrl.signal,
         async onopen(response) {
-          // TODO: Reset the answer node
-          if (answerNode.current) {
-            answerNode.current.innerText = ""
-          }
-          console.log("onopen")
+          setStreamResponse("")
+          setIsWaiting(false)
           if (
             response.ok &&
             response.headers.get("content-type")?.replace(/ /g, "") ===
               HEADERS_STREAM["Content-Type"]
           ) {
             // The stream opened successfully
+            console.log("Opening stream...")
             return
-          } else if (
+          }
+
+          if (
             response.status >= 400 &&
             response.status < 500 &&
             response.status !== 429
@@ -124,18 +131,33 @@ const ChatInput = () => {
           if (msg.event === "FatalError") {
             throw new FatalError(msg.data)
           }
+          if (msg.data === "[DONE]") {
+            return
+          }
           try {
-            console.log("msg.data: ", msg.data)
+            const jsonData = JSON.parse(msg.data) as Omit<
+              ExtendedCreateChatCompletionResponse,
+              "usage"
+            >
+            const newContent = jsonData.choices[0].delta.content
+            setStreamResponse((prev) => (newContent ? prev + newContent : prev))
           } catch (error) {
             console.log("aborting")
             ctrl.abort()
-            // onClose()
           }
         },
         onclose() {
-          // TODO: If the server closes the connection unexpectedly, retry:
-          // throw new RetriableError()
-          // onClose()
+          console.log("Closing stream...")
+          console.log("streamResponse: ", streamResponse)
+          setStreamResponse((prevStream) => {
+            console.log("prevStream: ", prevStream)
+            console.log("newMessages: ", newMessages)
+            setChatMessages([
+              ...newMessages,
+              { role: "assistant", content: prevStream },
+            ])
+            return ""
+          })
         },
         onerror(err: Error) {
           if (err instanceof Error) {
@@ -152,27 +174,12 @@ const ChatInput = () => {
           }
         },
       })
-      const res = await sendChatCompletionRequest(encrypted)
-
-      if (!res.choices[0].message) {
-        throw new Error(
-          "No message returned from OpenAI, please try again.\nres.choices[0].message was falsy."
-        )
-      }
-
-      const newMessagesWithChatResponse = [
-        ...newMessages,
-        res.choices[0].message,
-      ]
-
-      setChatMessages(newMessagesWithChatResponse)
     } catch (e) {
       console.error(
         "An error occurred while sending ChatCompletionRequest:\n",
         e
       )
     }
-    setIsWaiting(false)
   }
 
   const onClear = () => {
@@ -180,8 +187,11 @@ const ChatInput = () => {
     if (isWaiting) {
       setIsWaiting(false)
     }
+
+    ctrl.abort()
   }
 
+  // This will avoid server vs client mismatch
   useEffect(() => {
     if (!isMounted) {
       setIsMounted(true)
