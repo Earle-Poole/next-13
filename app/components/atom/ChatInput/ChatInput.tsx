@@ -142,16 +142,13 @@ const ChatInput = () => {
             const newContent = jsonData.choices[0].delta.content
             setStreamResponse((prev) => (newContent ? prev + newContent : prev))
           } catch (error) {
-            console.log("aborting")
+            console.log("Aborting stream...")
             ctrl.abort()
           }
         },
         onclose() {
           console.log("Closing stream...")
-          console.log("streamResponse: ", streamResponse)
           setStreamResponse((prevStream) => {
-            console.log("prevStream: ", prevStream)
-            console.log("newMessages: ", newMessages)
             setChatMessages([
               ...newMessages,
               { role: "assistant", content: prevStream },
