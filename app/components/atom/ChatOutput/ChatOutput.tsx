@@ -26,7 +26,7 @@ const ChatOutput = () => {
     if (current) {
       current.scrollTop = current.scrollHeight
     }
-  }, [messages])
+  }, [messages, streamResponse])
 
   return (
     <section
