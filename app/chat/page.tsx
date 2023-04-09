@@ -1,5 +1,5 @@
-import ChatInput from "@/components/atom/ChatInput"
-import ChatOutput from "@/components/atom/ChatOutput/ChatOutput"
+import ChatInput from "@/components/organisms/ChatInput"
+import ChatOutput from "@/components/organisms/ChatOutput"
 
 const Page = async () => {
   return (

@@ -1,8 +1,6 @@
 import { atomWithStorage } from "jotai/utils"
-import {
-  ChatCompletionResponseMessage,
-  CreateChatCompletionRequest,
-} from "openai"
+import { ChatCompletionResponseMessage } from "openai"
+import { ChatModelValues } from "types/useChat"
 
 interface ChatStoreType {
   messages: ChatCompletionResponseMessage[]
@@ -53,10 +51,4 @@ chatAtom.onMount = () => {
   } catch (e) {
     localStorage.removeItem(CHAT_KEY)
   }
-}
-
-export type ChatModelValues = typeof ChatModels[keyof typeof ChatModels]
-
-export interface IChatCompletionRequest extends CreateChatCompletionRequest {
-  model: ChatModelValues
 }

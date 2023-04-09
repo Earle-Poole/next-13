@@ -1,39 +1,20 @@
-"use client"
-
+import { fetchEventSource } from "@microsoft/fetch-event-source"
+import { useState, useEffect, useRef, FormEventHandler } from "react"
 import { useAtom } from "jotai"
-import Button from "../Button"
-import {
-  ChatModelValues,
-  ChatModels,
-  IChatCompletionRequest,
-  chatAtom,
-  defaultChatAtom,
-} from "@/components/stores/ChatStore"
+import { chatAtom, defaultChatAtom } from "@/components/stores/ChatStore"
+import { streamAtom } from "@/components/stores/StreamStore"
 import {
   ChatCompletionRequestMessageRoleEnum,
   ChatCompletionResponseMessage,
-  CreateChatCompletionResponse,
-  CreateChatCompletionResponseChoicesInner,
 } from "openai"
-import { FormEventHandler, useEffect, useRef, useState } from "react"
-import Select from "react-select"
-import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
-import { fetchEventSource } from "@microsoft/fetch-event-source"
+import {
+  ChatModelValues,
+  ExtendedCreateChatCompletionResponse,
+  IChatCompletionRequest,
+} from "types/useChat"
 import { HEADERS_STREAM } from "pages/api/chat-stream"
-import { streamAtom } from "@/components/stores/StreamStore"
 
-class RetriableError extends Error {}
-class FatalError extends Error {}
-
-interface ExtendedCreateChatCompletionResponseChoicesInner
-  extends CreateChatCompletionResponseChoicesInner {
-  delta: { content?: string }
-}
-interface ExtendedCreateChatCompletionResponse
-  extends CreateChatCompletionResponse {
-  choices: [ExtendedCreateChatCompletionResponseChoicesInner]
-}
-const ChatInput = () => {
+function useChat() {
   const [isMounted, setIsMounted] = useState(false)
   const [{ messages, model, isWaiting }, setChatStore] = useAtom(chatAtom)
   const [streamResponse, setStreamResponse] = useAtom(streamAtom)
@@ -64,6 +45,7 @@ const ChatInput = () => {
     setChatModel(value)
   }
 
+  // Your onSubmit, onClear functions and useEffect go here
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
     const target = e.target as HTMLFormElement
@@ -197,50 +179,22 @@ const ChatInput = () => {
     ctrl.current.abort("User cleared chat")
   }
 
-  // This will avoid server vs client mismatch
   useEffect(() => {
     if (!isMounted) {
       setIsMounted(true)
     }
   }, [])
 
-  return (
-    <form onSubmit={onSubmit} className="flex gap-2 w-full">
-      <div className="flex flex-1 flex-wrap gap-2">
-        {isMounted ? (
-          <Select
-            className="text-black min-w-[13rem] min-h-[2.75rem]"
-            classNames={{
-              control: () => "!min-h-[2.75rem]",
-            }}
-            menuPlacement="top"
-            options={Object.values(ChatModels).map((chatModel) => ({
-              value: chatModel,
-              label: chatModel,
-            }))}
-            defaultValue={{ value: model, label: model }}
-            onChange={onModelChange}
-          />
-        ) : (
-          <div className="flex justify-center items-center min-w-[13rem] min-h-[2.75rem]">
-            <LoadingIndicator />
-          </div>
-        )}
-        <input
-          placeholder="Send a message..."
-          className="text-black p-2 rounded flex-1"
-          name="message"
-          type="text"
-        />
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <Button type="submit">Send</Button>
-        <Button type="button" onClick={onClear}>
-          Clear
-        </Button>
-      </div>
-    </form>
-  )
+  return {
+    isMounted,
+    model,
+    onClear,
+    onModelChange,
+    onSubmit,
+  }
 }
 
-export default ChatInput
+class FatalError extends Error {}
+class RetriableError extends Error {}
+
+export default useChat

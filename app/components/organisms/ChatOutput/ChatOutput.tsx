@@ -1,32 +1,47 @@
 "use client"
 import { useAtom } from "jotai"
 import { chatAtom } from "@/components/stores/ChatStore"
-import { lazy, useEffect, useRef, useState } from "react"
-import LoadingIndicator from "../LoadingIndicator/LoadingIndicator"
-import { ChatCompletionResponseMessageRoleEnum } from "openai"
+import { useEffect, useRef } from "react"
+import LoadingIndicator from "../../atom/LoadingIndicator/LoadingIndicator"
+import MessageRenderer from "@/components/molecules/MessageRenderer"
+import useChat from "@/utils/hooks/useChat"
+import StreamRenderer from "@/components/molecules/StreamRenderer"
 import { streamAtom } from "@/components/stores/StreamStore"
-import MessageRenderer from "@/components/molecules/Message/Message"
 
 const ChatOutput = () => {
-  const [isMounted, setIsMounted] = useState(false)
+  const { isMounted } = useChat()
   const [{ messages, isWaiting }] = useAtom(chatAtom)
   const [streamResponse] = useAtom(streamAtom)
   const chatOutputRef = useRef<HTMLElement>(null)
 
-  // This will avoid server vs client mismatch
+  // Scroll the window down if the scroll is at the bottom, and
+  // a response is actively streaming
   useEffect(() => {
-    if (!isMounted) {
-      setIsMounted(true)
-    }
-  }, [isMounted])
+    const { current } = chatOutputRef
+    if (current) {
+      const fontSize = Number(
+        window
+          .getComputedStyle(current, null)
+          .getPropertyValue("font-size")
+          .split("px")[0]
+      )
+      const scrollLeewayByFontSize = (fontSize || 0) * 3
+      const scrollHeightRequiredToAutoScroll =
+        current.scrollHeight - current.clientHeight - scrollLeewayByFontSize
 
-  // This useEffect is to scroll to the bottom of the chat output when a new message is added
+      if (current.scrollTop > scrollHeightRequiredToAutoScroll) {
+        current.scrollTop = current.scrollHeight
+      }
+    }
+  }, [streamResponse])
+
+  // Scroll the window down when a new message is added
   useEffect(() => {
     const { current } = chatOutputRef
     if (current) {
       current.scrollTop = current.scrollHeight
     }
-  }, [messages, streamResponse])
+  }, [messages])
 
   return (
     <section
@@ -38,14 +53,7 @@ const ChatOutput = () => {
           {messages.map((message) => (
             <MessageRenderer key={message.content} message={message} />
           ))}
-          {streamResponse ? (
-            <MessageRenderer
-              message={{
-                role: ChatCompletionResponseMessageRoleEnum.Assistant,
-                content: streamResponse,
-              }}
-            />
-          ) : null}
+          <StreamRenderer />
           {isWaiting ? (
             <div className="flex justify-center pt-10">
               <LoadingIndicator />
