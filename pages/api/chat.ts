@@ -1,5 +1,4 @@
 import { ChatModels } from "@/components/stores/ChatStore"
-import { ChatModelValues } from "@/components/stores/ChatStore"
 import {
   TextModelValues,
   TextModels,
@@ -8,6 +7,7 @@ import { decodeBase64, encodeBase64 } from "@/utils/lib"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Configuration, OpenAIApi } from "openai"
 import { OpenAIApi as EdgeOpenAIApi } from "openai-edge"
+import { ChatModelValues } from "types/useChat"
 
 export const config = {
   runtime: "edge",
