@@ -9,29 +9,44 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-const handler = async (req: NextRequest) => {
+const validateRequest = (req: NextRequest) => {
   if (req.method !== "POST") {
     return new Response("Invalid request method, please use POST.", {
       status: 405,
     })
   }
 
+  return null
+}
+
+const getRequestBody = async (req: NextRequest) => {
   const body = await new Response(req.body).json()
 
   if (!("model" in body) || typeof body.model !== "string") {
     return new Response("Missing model parameter", { status: 400 })
   }
 
-  const parsedBodyModel: ChatModelValues | TextModelValues = body.model
+  return body
+}
+
+const createCompletion = async (body: any) => {
+  return await openai.createChatCompletion({
+    model: body.model as ChatModelValues | TextModelValues,
+    messages: body.messages,
+    temperature: 0.6,
+    stream: true,
+  })
+}
+
+const handler = async (req: NextRequest) => {
+  const invalidRequestResponse = validateRequest(req)
+  if (invalidRequestResponse) return invalidRequestResponse
+
+  const body = await getRequestBody(req)
+  if (body instanceof Response) return body
 
   try {
-    const completion = await openai.createChatCompletion({
-      model: parsedBodyModel,
-      messages: body.messages,
-      // max_tokens: 64,
-      temperature: 0.6,
-      stream: true,
-    })
+    const completion = await createCompletion(body)
 
     return new Response(completion.body, {
       headers: HEADERS_STREAM,

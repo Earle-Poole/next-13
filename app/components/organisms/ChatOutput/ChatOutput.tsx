@@ -25,7 +25,7 @@ const ChatOutput = () => {
           .getPropertyValue("font-size")
           .split("px")[0]
       )
-      const scrollLeewayByFontSize = (fontSize || 0) * 3
+      const scrollLeewayByFontSize = (fontSize || 0) * 4
       const scrollHeightRequiredToAutoScroll =
         current.scrollHeight - current.clientHeight - scrollLeewayByFontSize
 
