@@ -1,4 +1,4 @@
-import { ChatModelValues } from "@/components/stores/ChatStore"
+import { ChatModels } from "@/components/stores/ChatStore"
 import {
   CreateChatCompletionRequest,
   CreateChatCompletionResponse,

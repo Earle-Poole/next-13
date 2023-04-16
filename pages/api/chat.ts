@@ -7,11 +7,7 @@ import { decodeBase64, encodeBase64 } from "@/utils/lib"
 import { NextApiRequest, NextApiResponse } from "next"
 import { Configuration, OpenAIApi } from "openai"
 import { OpenAIApi as EdgeOpenAIApi } from "openai-edge"
-import { ChatModelValues } from "types/useChat"
-
-export const config = {
-  runtime: "edge",
-}
+import { ChatModelValues } from "types/useChat.types"
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_SECRET,
@@ -90,9 +86,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // TODO: Properly handle errors, pop off last user message, or add a message to the chat bot
     console.error("Could not access OpenAI, please try again.\n\nError: ", e)
     return new Response("Could not access OpenAI, please try again.", {
-      status: 500,
+      status: 400,
+      headers: {
+        "content-type": "application/json",
+      },
     })
   }
 }
 
 export default handler
+
+export const config = {
+  runtime: "edge",
+}

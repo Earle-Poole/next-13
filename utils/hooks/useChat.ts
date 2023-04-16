@@ -11,7 +11,7 @@ import {
   ChatModelValues,
   ExtendedCreateChatCompletionResponse,
   IChatCompletionRequest,
-} from "types/useChat"
+} from "types/useChat.types"
 import { HEADERS_STREAM } from "pages/api/chat-stream"
 
 function useChat() {

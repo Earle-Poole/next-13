@@ -1,7 +1,7 @@
 import { TextModelValues } from "@/components/stores/TextCompleteStore"
 import type { NextRequest } from "next/server"
 import { Configuration, OpenAIApi } from "openai-edge"
-import { ChatModelValues } from "types/useChat"
+import { ChatModelValues } from "types/useChat.types"
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_SECRET,

@@ -1,6 +1,6 @@
 import { atomWithStorage } from "jotai/utils"
 import { ChatCompletionResponseMessage } from "openai"
-import { ChatModelValues } from "types/useChat"
+import { ChatModelValues } from "types/useChat.types"
 
 interface ChatStoreType {
   messages: ChatCompletionResponseMessage[]
@@ -9,8 +9,8 @@ interface ChatStoreType {
 }
 const CHAT_KEY = "chat"
 export const ChatModels = {
-  GPT4: "gpt-4-0314",
-  GPT4Legacy: "gpt-4",
+  GPT4: "gpt-4",
+  GPT4Legacy: "gpt-4-0314",
   GPTTurbo: "gpt-3.5-turbo-0301",
   GPTTurboLegacy: "gpt-3.5-turbo",
 } as const

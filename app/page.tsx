@@ -7,6 +7,7 @@ const pages = [
   { href: "/pokemon", title: "Pokemon" },
   { href: "/events", title: "Events" },
   { href: "/chat", title: "Chat" },
+  { href: "/image", title: "Image" },
 ]
 
 const Page = async () => {

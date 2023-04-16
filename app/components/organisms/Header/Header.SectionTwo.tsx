@@ -20,6 +20,7 @@ const titleByPathName = new Map([
   ["/pokemon", "Pokémon"],
   ["/events", "Event"],
   ["/chat", "Chat"],
+  ["/image", "Image"],
 ])
 
 const parsePathForTitle = (pathname: string) => {
