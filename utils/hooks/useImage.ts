@@ -30,7 +30,6 @@ const useImage = () => {
 
   const onImageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("e: ", e)
     const target = e.target as HTMLFormElement
     const form = new FormData(target)
 

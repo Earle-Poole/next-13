@@ -7,6 +7,7 @@ import MessageRenderer from "@/components/molecules/MessageRenderer"
 import useChat from "@/utils/hooks/useChat"
 import StreamRenderer from "@/components/molecules/StreamRenderer"
 import { streamAtom } from "@/components/stores/StreamStore"
+import { ChatCompletionResponseMessageRoleEnum } from "openai"
 
 const ChatOutput = () => {
   const { isMounted } = useChat()
@@ -46,13 +47,21 @@ const ChatOutput = () => {
   return (
     <section
       ref={chatOutputRef}
-      className="flex-1 overflow-auto max-h-[calc(100vh-15rem)] sm:max-h-[calc(100vh-12rem)]"
+      className="flex-1 overflow-auto max-h-[calc(100vh-18.5rem)] sm:max-h-[calc(100vh-16rem)]"
     >
       {isMounted ? (
         <>
-          {messages.map((message) => (
-            <MessageRenderer key={message.content} message={message} />
-          ))}
+          {messages.length > 0 ? (
+            messages.map((message) =>
+              message.role !== ChatCompletionResponseMessageRoleEnum.System ? (
+                <MessageRenderer key={message.content} message={message} />
+              ) : null
+            )
+          ) : (
+            <div className="flex justify-center italic">
+              Send a message to get started...
+            </div>
+          )}
           <StreamRenderer />
           {isWaiting ? (
             <div className="flex justify-center pt-10">

@@ -13,11 +13,13 @@ import {
   IChatCompletionRequest,
 } from "types/useChat.types"
 import { HEADERS_STREAM } from "pages/api/chat-stream"
+import prePromptAtom from "@/components/stores/PrePromptStore"
 
 function useChat() {
   const [isMounted, setIsMounted] = useState(false)
   const [{ messages, model, isWaiting }, setChatStore] = useAtom(chatAtom)
   const [streamResponse, setStreamResponse] = useAtom(streamAtom)
+  const [prePrompt] = useAtom(prePromptAtom)
   const ctrl = useRef(new AbortController())
 
   const setChatMessages = (messages: ChatCompletionResponseMessage[]) => {
@@ -64,6 +66,19 @@ function useChat() {
         content: message.toString(),
       },
     ]
+
+    if (prePrompt.value) {
+      const prevSystemMessage = newMessages.findIndex(
+        (msg) => msg.role === ChatCompletionRequestMessageRoleEnum.System
+      )
+      if (prevSystemMessage !== -1) {
+        newMessages.splice(prevSystemMessage, 1)
+        newMessages.unshift({
+          role: ChatCompletionRequestMessageRoleEnum.System,
+          content: prePrompt.value,
+        })
+      }
+    }
 
     setChatMessages(newMessages)
     target.reset()

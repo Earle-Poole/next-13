@@ -11,19 +11,12 @@ const CHAT_KEY = "chat"
 export const ChatModels = {
   GPT4: "gpt-4",
   GPT4Legacy: "gpt-4-0314",
-  GPTTurbo: "gpt-3.5-turbo-0301",
-  GPTTurboLegacy: "gpt-3.5-turbo",
+  GPTTurbo: "gpt-3.5-turbo",
+  GPTTurboLegacy: "gpt-3.5-turbo-0301",
 } as const
 
 export const defaultChatAtom: ChatStoreType = {
-  messages: [
-    { role: "user", content: "Hello Chatbot! Let's see what you can do!" },
-    {
-      role: "assistant",
-      content:
-        "I'd be happy to show you what I can do. What would you like to talk about?",
-    },
-  ],
+  messages: [],
   model: ChatModels.GPT4,
   isWaiting: false,
 }
