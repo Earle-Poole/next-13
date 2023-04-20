@@ -67,17 +67,18 @@ function useChat() {
       },
     ]
 
+    const prevSystemMessage = newMessages.findIndex(
+      (msg) => msg.role === ChatCompletionRequestMessageRoleEnum.System
+    )
+    if (prevSystemMessage !== -1) {
+      newMessages.splice(prevSystemMessage, 1)
+    }
+
     if (prePrompt.value) {
-      const prevSystemMessage = newMessages.findIndex(
-        (msg) => msg.role === ChatCompletionRequestMessageRoleEnum.System
-      )
-      if (prevSystemMessage !== -1) {
-        newMessages.splice(prevSystemMessage, 1)
-        newMessages.unshift({
-          role: ChatCompletionRequestMessageRoleEnum.System,
-          content: prePrompt.value,
-        })
-      }
+      newMessages.unshift({
+        role: ChatCompletionRequestMessageRoleEnum.System,
+        content: prePrompt.value,
+      })
     }
 
     setChatMessages(newMessages)
