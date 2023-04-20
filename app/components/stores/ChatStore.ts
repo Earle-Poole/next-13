@@ -2,7 +2,7 @@ import { atomWithStorage } from "jotai/utils"
 import { ChatCompletionResponseMessage } from "openai"
 import { ChatModelValues } from "types/useChat.types"
 
-interface ChatStoreType {
+interface IChatStoreType {
   messages: ChatCompletionResponseMessage[]
   model: ChatModelValues
   isWaiting: boolean
@@ -15,14 +15,14 @@ export const ChatModels = {
   GPTTurboLegacy: "gpt-3.5-turbo-0301",
 } as const
 
-export const defaultChatAtom: ChatStoreType = {
+export const defaultChatAtom: IChatStoreType = {
   messages: [],
   model: ChatModels.GPT4,
   isWaiting: false,
 }
 
 // The default state should be a conversation with the chat bot. The first entry will be the user's initial prompt.
-export const chatAtom = atomWithStorage<ChatStoreType>(
+export const chatAtom = atomWithStorage<IChatStoreType>(
   CHAT_KEY,
   defaultChatAtom
 )

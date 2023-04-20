@@ -4,7 +4,7 @@ import PrePrompt from "@/components/organisms/PrePrompt/PrePrompt"
 
 const Page = async () => {
   return (
-    <div className="w-screen flex flex-1 flex-col gap-4 p-8 max-w-7xl">
+    <div className="w-screen flex flex-1 flex-col gap-4 px-8 py-4 max-w-7xl">
       <PrePrompt />
       <ChatOutput />
       <ChatInput />

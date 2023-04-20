@@ -47,7 +47,7 @@ const ChatOutput = () => {
   return (
     <section
       ref={chatOutputRef}
-      className="flex-1 overflow-auto max-h-[calc(100vh-18.5rem)] sm:max-h-[calc(100vh-16rem)]"
+      className="flex-1 overflow-auto max-h-[calc(100vh-28rem)] sm:max-h-[calc(100vh-16rem)]"
     >
       {isMounted ? (
         <>

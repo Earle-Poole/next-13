@@ -13,13 +13,13 @@ import {
   IChatCompletionRequest,
 } from "types/useChat.types"
 import { HEADERS_STREAM } from "pages/api/chat-stream"
-import prePromptAtom from "@/components/stores/PrePromptStore"
+import usePrePrompt from "./usePrePrompt"
 
 function useChat() {
   const [isMounted, setIsMounted] = useState(false)
   const [{ messages, model, isWaiting }, setChatStore] = useAtom(chatAtom)
   const [streamResponse, setStreamResponse] = useAtom(streamAtom)
-  const [prePrompt] = useAtom(prePromptAtom)
+  const { getPrePromptString } = usePrePrompt()
   const ctrl = useRef(new AbortController())
 
   const setChatMessages = (messages: ChatCompletionResponseMessage[]) => {
@@ -74,10 +74,11 @@ function useChat() {
       newMessages.splice(prevSystemMessage, 1)
     }
 
-    if (prePrompt.value) {
+    const prePromptContent = getPrePromptString()
+    if (prePromptContent) {
       newMessages.unshift({
         role: ChatCompletionRequestMessageRoleEnum.System,
-        content: prePrompt.value,
+        content: prePromptContent,
       })
     }
 
@@ -128,7 +129,7 @@ function useChat() {
         },
         onmessage(msg) {
           // TODO: If the server emits an error message, throw an exception
-          // so it gets handled by the onerror callback below:
+          // so it gets handled by the onerror callback below
           if (ctrl.current.signal.aborted) {
             throw new FatalError(ctrl.current.signal.reason)
           }
@@ -165,9 +166,6 @@ function useChat() {
             console.log("onerror fatal", err)
             // rethrow to stop the operation
             throw err
-            // setAwaitingFirstToken(false)
-            // setError(`Something went wrong with the request`)
-            // throw err
           } else {
             console.log("onerror other", err)
             // do nothing to automatically retry. You can also
