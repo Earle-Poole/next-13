@@ -1,8 +1,8 @@
-import { atom } from "jotai"
+import { atom } from 'jotai'
 
 const imageAtom = atom({
-  isLoading: false,
-  url: "",
+    isLoading: false,
+    url: '',
 })
 
 export default imageAtom

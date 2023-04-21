@@ -1,3 +1,3 @@
-import { chatAtom } from "./ChatStore"
+import { chatAtom } from './ChatStore'
 
 export default { chatAtom }
