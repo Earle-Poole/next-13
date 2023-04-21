@@ -1,1 +1,1 @@
-export { default } from "./StreamRenderer"
+export { default } from './StreamRenderer'

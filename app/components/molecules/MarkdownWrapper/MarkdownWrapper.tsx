@@ -1,15 +1,15 @@
-import { FC, PropsWithChildren, lazy } from "react"
-import markdownWrapperComponents from "./MarkdownWrapper.Components"
-const ReactMarkdown = lazy(() => import("react-markdown"))
+import { FC, PropsWithChildren, lazy } from 'react'
+import markdownWrapperComponents from './MarkdownWrapper.Components'
+const ReactMarkdown = lazy(() => import('react-markdown'))
 
 const MarkdownWrapper: FC<PropsWithChildren<{ content: string }>> = ({
-  content,
+    content,
 }) => {
-  return (
-    <ReactMarkdown components={markdownWrapperComponents}>
-      {content}
-    </ReactMarkdown>
-  )
+    return (
+        <ReactMarkdown components={markdownWrapperComponents}>
+            {content}
+        </ReactMarkdown>
+    )
 }
 
 export default MarkdownWrapper

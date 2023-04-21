@@ -3,14 +3,14 @@ import { asyncComponent } from '@/utils/lib'
 import { getContentByID } from '@/utils/cache'
 
 interface ArticleRowProps {
-  id: string
+    id: string
 }
 
 const ArticleRowServer = asyncComponent(async (props: ArticleRowProps) => {
-  const { id } = props
-  const topic = await getContentByID(id)
+    const { id } = props
+    const topic = await getContentByID(id)
 
-  return <ArticleRow topic={topic} />
+    return <ArticleRow topic={topic} />
 })
 
 export default ArticleRowServer

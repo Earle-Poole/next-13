@@ -1,1 +1,1 @@
-export { default } from "./MarkdownWrapper"
+export { default } from './MarkdownWrapper'
