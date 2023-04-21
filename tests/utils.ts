@@ -8,4 +8,3 @@ export function setupFetchStub(data: any) {
         }) as unknown as Promise<Response>
     })
 }
-
