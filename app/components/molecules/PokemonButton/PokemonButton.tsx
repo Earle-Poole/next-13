@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { NamedAPIResource } from 'global'
 
 const PokemonButton = ({ pokemon }: { pokemon: NamedAPIResource }) => {
-    return (
-        <Link href={`/pokemon/${pokemon.name}`}>
-            <Button title={pokemon.name}>Random Pokemon!</Button>
-        </Link>
-    )
+  return (
+    <Link href={`/pokemon/${pokemon.name}`}>
+      <Button title={pokemon.name}>Random Pokemon!</Button>
+    </Link>
+  )
 }
 
 export default PokemonButton

@@ -1,18 +1,18 @@
 import { NamedAPIResourceList } from 'global'
 
 export function decimetersToFeetAndInches(decimeters: number) {
-    const inches = Math.round(decimeters * 3.93701)
-    const feet = Math.floor(inches / 12)
-    const remainingInches = inches % 12
-    return `${feet}'${remainingInches}"`
+  const inches = Math.round(decimeters * 3.93701)
+  const feet = Math.floor(inches / 12)
+  const remainingInches = inches % 12
+  return `${feet}'${remainingInches}"`
 }
 
 export function hectogramsToPounds(hectograms: number) {
-    return Math.round(hectograms / 4.536)
+  return Math.round(hectograms / 4.536)
 }
 
 export function isServer() {
-    return typeof window === 'undefined'
+  return typeof window === 'undefined'
 }
 
 /**
@@ -24,37 +24,36 @@ z * @param {NamedAPIResourceList} pokemonList - A list of Pokemon.
  * @returns {NamedAPIResource} - A random Pokemon from the list.
  */
 export function getRandomPokemon(pokemonList: NamedAPIResourceList) {
-    const randomIndex = Math.floor(Math.random() * pokemonList.results.length)
-    return pokemonList.results[randomIndex] || null
+  const randomIndex = Math.floor(Math.random() * pokemonList.results.length)
+  return pokemonList.results[randomIndex] || null
 }
 
 /**
  * This is a workaround for TypeScript to allow us to use async components within client components.
  */
 export function asyncComponent<T, R>(
-    // The function to wrap
-    fn: (arg: T) => Promise<R>
+  // The function to wrap
+  fn: (arg: T) => Promise<R>
 ): (arg: T) => R {
-    // Return the wrapped function
-    return fn as (arg: T) => R
+  // Return the wrapped function
+  return fn as (arg: T) => R
 }
 
 export function generateUUID() {
-    return '3xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(
-        /[x]/g,
-        function (char) {
-            const random16Bits = (Math.random() * 16) | 0
-            const value =
-                char === 'x' ? random16Bits : (random16Bits & 0x3) | 0x8
-            return value.toString(16)
-        }
-    )
+  return '3xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(
+    /[x]/g,
+    function (char) {
+      const random16Bits = (Math.random() * 16) | 0
+      const value = char === 'x' ? random16Bits : (random16Bits & 0x3) | 0x8
+      return value.toString(16)
+    }
+  )
 }
 
 export const decodeBase64 = (data: string): string => {
-    return atob(data)
+  return atob(data)
 }
 
 export const encodeBase64 = (data: string): string => {
-    return btoa(data)
+  return btoa(data)
 }

@@ -1,11 +1,11 @@
 import { LayoutPageProps } from 'global'
 
 export const metadata = {
-    title: 'Image - Next 13',
+  title: 'Image - Next 13',
 }
 
 const Layout = ({ children }: LayoutPageProps) => {
-    return <div className="flex flex-1 relative justify-center">{children}</div>
+  return <div className="flex flex-1 relative justify-center">{children}</div>
 }
 
 export default Layout

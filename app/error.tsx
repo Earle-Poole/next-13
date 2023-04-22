@@ -11,23 +11,23 @@ import { getRandomPokemon } from '@/utils/lib'
  * This is a page-level error handler
  */
 const Error = (props: ErrorPageProps) => {
-    const { error, reset } = props
-    const pokemonList = use(getPokemonList())
-    const randomPokemon = getRandomPokemon(pokemonList)
-    useEffect(() => {
-        // Log the error to Sentry, or similar
-        console.log('The error: ', error)
-    }, [error])
+  const { error, reset } = props
+  const pokemonList = use(getPokemonList())
+  const randomPokemon = getRandomPokemon(pokemonList)
+  useEffect(() => {
+    // Log the error to Sentry, or similar
+    console.log('The error: ', error)
+  }, [error])
 
-    return (
-        <div className="w-screen flex flex-1 items-center justify-center flex-col gap-4">
-            <p>Something went wrong!</p>
-            <button onClick={reset}>Reset error boundary</button>
-            <div>
-                <PokemonButton pokemon={randomPokemon} />
-            </div>
-        </div>
-    )
+  return (
+    <div className="w-screen flex flex-1 items-center justify-center flex-col gap-4">
+      <p>Something went wrong!</p>
+      <button onClick={reset}>Reset error boundary</button>
+      <div>
+        <PokemonButton pokemon={randomPokemon} />
+      </div>
+    </div>
+  )
 }
 
 export default Error
