@@ -1,9 +1,9 @@
+import type { ITextCompletionRequest } from '@/components/stores/TextCompleteStore'
+import type { CreateChatCompletionResponse } from 'openai'
 import { decodeBase64 } from './lib'
-import { ITextCompletionRequest } from '@/components/stores/TextCompleteStore'
-import { CreateChatCompletionResponse } from 'openai'
 
 export const sendChatCompletionRequest = async (
-  data: string
+  data: string,
 ): Promise<CreateChatCompletionResponse> => {
   const response = await fetch('/api/chat', {
     method: 'POST',
@@ -23,7 +23,7 @@ export const sendChatCompletionRequest = async (
 }
 
 export const sendTextCompletionRequest = async (
-  props: ITextCompletionRequest
-) => {
+  props: ITextCompletionRequest,
+): Promise<void> => {
   // TODO
 }

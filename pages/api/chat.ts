@@ -1,17 +1,16 @@
 import { ChatModels } from '@/components/stores/ChatStore'
-import {
-  TextModelValues,
-  TextModels,
-} from '@/components/stores/TextCompleteStore'
+import type { TextModelValues } from '@/components/stores/TextCompleteStore'
+import { TextModels } from '@/components/stores/TextCompleteStore'
+
 import { decodeBase64, encodeBase64 } from '@/utils/lib'
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi } from 'openai'
 import { OpenAIApi as EdgeOpenAIApi } from 'openai-edge'
-import { ChatModelValues } from 'types/useChat.types'
+import type { ChatModelValues } from 'types/useChat.types'
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_SECRET,
-  organization: 'org-oxy4ydBZDsiyT71nD4KiFVBC',
+  organization: process.env.OPENAI_ORG,
 })
 
 const openai = new OpenAIApi(configuration)
@@ -22,7 +21,10 @@ const edgeopenai = new EdgeOpenAIApi(configuration)
  * @param req
  * @param res
  */
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+): Promise<Response | undefined> {
   if (req.method === 'GET') {
     const enginesResponse = await openai.listEngines()
     const { data: enginesData } = enginesResponse
@@ -48,7 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const parsedBodyModel: ChatModelValues | TextModelValues = parsedBody.model
   try {
     const isTextCompletionRequest = Object.values(TextModels).includes(
-      parsedBodyModel as TextModelValues
+      parsedBodyModel as TextModelValues,
     )
 
     if (isTextCompletionRequest) {
@@ -67,7 +69,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const isChatCompletionRequest = Object.values(ChatModels).includes(
-      parsedBodyModel as ChatModelValues
+      parsedBodyModel as ChatModelValues,
     )
 
     if (isChatCompletionRequest) {

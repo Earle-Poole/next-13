@@ -7,7 +7,7 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-const handler = async (req: NextRequest) => {
+const handler = async (req: NextRequest): Promise<Response> => {
   if (req.method !== 'POST') {
     return new Response('Invalid request method, please use POST', {
       status: 400,
@@ -20,10 +20,11 @@ const handler = async (req: NextRequest) => {
   }
 
   try {
+    const size = typeof body.size === 'string' ? body.size : ImageSizes.SMALL
     const image = await openai.createImage({
       prompt: body.message,
       n: 1,
-      size: body.size || ImageSizes.SMALL,
+      size,
       response_format: 'url',
     })
 
@@ -43,7 +44,7 @@ const handler = async (req: NextRequest) => {
     // TODO: Properly handle errors, pop off last user message, or add a message to the chat bot
     console.error(
       'Could not access OpenAI, please try again.\n\nError: ',
-      error
+      error,
     )
     return new Response('Could not access OpenAI, please try again.', {
       status: 400,

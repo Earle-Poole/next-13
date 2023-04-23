@@ -1,8 +1,8 @@
-import { getPokemonList } from './../utils/cache'
 import {
   getContent,
   getContentByID,
   getNowAsLocalTimeString,
+  getPokemonList,
 } from '@/utils/cache'
 import {
   getContentByIDMockResponse,
@@ -12,7 +12,7 @@ import {
 import { setupFetchStub } from './utils'
 
 beforeAll(() => {
-  global.fetch = () => new Promise(() => {})
+  global.fetch = async () => await new Promise(() => {})
 })
 
 describe('getContent', () => {
@@ -35,8 +35,8 @@ describe('getContent', () => {
     // that returns a failed response
     jest
       .spyOn(global, 'fetch')
-      .mockImplementationOnce(() =>
-        Promise.reject(new Error('Failed to fetch'))
+      .mockImplementationOnce(
+        async () => await Promise.reject(new Error('Failed to fetch')),
       )
 
     // Call the getContent function and assert that

@@ -1,12 +1,17 @@
 'use client'
-import Button from '../../atom/Button'
+import { getRandomPokemon } from '@/utils/lib'
+import type { NamedAPIResourceList } from 'global'
 import Link from 'next/link'
-import { NamedAPIResource } from 'global'
+import { FC } from 'react'
+import Button from '../../atom/Button'
 
-const PokemonButton = ({ pokemon }: { pokemon: NamedAPIResource }) => {
+const PokemonButton: FC<{
+  pokemonList: NamedAPIResourceList
+}> = ({ pokemonList }) => {
+  const randomPokemon = getRandomPokemon(pokemonList)
   return (
-    <Link href={`/pokemon/${pokemon.name}`}>
-      <Button title={pokemon.name}>Random Pokemon!</Button>
+    <Link href={`/pokemon/${randomPokemon.name}`}>
+      <Button title={randomPokemon.name}>Random Pokemon!</Button>
     </Link>
   )
 }

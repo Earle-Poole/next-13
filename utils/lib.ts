@@ -1,4 +1,5 @@
 import { NamedAPIResourceList } from 'global'
+import { ChangeEventHandler } from 'react'
 
 export function decimetersToFeetAndInches(decimeters: number) {
   const inches = Math.round(decimeters * 3.93701)
@@ -56,4 +57,21 @@ export const decodeBase64 = (data: string): string => {
 
 export const encodeBase64 = (data: string): string => {
   return btoa(data)
+}
+
+export const onTextAreaChange: ChangeEventHandler<HTMLTextAreaElement> = ({
+  target,
+}) => {
+  target.style.height = ''
+
+  const targetComputedStyle = getComputedStyle(target, null)
+  const lineHeight = parseInt(
+    targetComputedStyle.getPropertyValue('line-height'),
+    10
+  )
+  const maxLines = 10
+  const maxHeight = lineHeight * maxLines
+
+  const scrollHeight = target.scrollHeight
+  target.style.height = Math.min(scrollHeight, maxHeight) + 'px'
 }

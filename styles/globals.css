@@ -56,3 +56,24 @@ svg {
   shape-rendering: auto;
   text-rendering: optimizeLegibility;
 }
+
+*::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background-color: #FFFFFF0A;
+}
+
+*::-webkit-scrollbar {
+  border-radius: 3px;
+  width: 12px;
+  background-color: #FFFFFF0A;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #334155;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #263140;
+
+}

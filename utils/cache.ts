@@ -1,12 +1,12 @@
-import {
+import type {
   GetContentsResponse,
   NamedAPIResourceList,
   Pokemon,
   Topic,
 } from 'global'
-import { POKE_API_ROOT } from './constants'
-import { cache } from 'react'
 import capitalize from 'lodash/capitalize'
+import { cache } from 'react'
+import { POKE_API_ROOT } from './constants'
 
 /**
  * Fetches a list of Pokemon from a remote API and returns the list as a JavaScript object.
@@ -22,7 +22,7 @@ export const getPokemonList = cache(async (): Promise<NamedAPIResourceList> => {
     throw new Error('Failed to fetch pokemon list')
   }
 
-  return response.json()
+  return await response.json()
 })
 
 /**
@@ -38,7 +38,7 @@ export const getNowAsLocalTimeString = cache(() =>
     timeZone: 'America/Chicago',
     timeZoneName: 'short',
     year: '2-digit',
-  })
+  }),
 )
 
 /**
@@ -56,7 +56,7 @@ export const getContent = cache(async (): Promise<GetContentsResponse> => {
     throw new Error(`Failed to fetch content from ${url}`)
   }
 
-  return response.json()
+  return await response.json()
 })
 
 /**
@@ -72,7 +72,7 @@ export const getContentByID = cache(async (id: string): Promise<Topic> => {
     throw new Error(`Failed to fetch content from ${url}`)
   }
 
-  return response.json()
+  return await response.json()
 })
 
 /**
@@ -85,5 +85,5 @@ export async function getPokemonByName(name: string): Promise<Pokemon | null> {
   if (response.status !== 200) {
     throw new Error(`Failed to fetch pokemon ${capitalize(name)}`)
   }
-  return response.json()
+  return await response.json()
 }

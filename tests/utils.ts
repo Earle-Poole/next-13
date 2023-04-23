@@ -1,10 +1,8 @@
-export function setupFetchStub(data: any) {
-  return jest.fn((_url: RequestInfo | URL) => {
-    return new Promise((resolve) => {
-      resolve({
-        status: 200,
-        json: () => Promise.resolve(data),
-      })
-    }) as unknown as Promise<Response>
+export function setupFetchStub(data: any): jest.Mock {
+  return jest.fn(async (_url: RequestInfo | URL) => {
+    return await Promise.resolve({
+      status: 200,
+      json: async () => await Promise.resolve(data),
+    })
   })
 }
