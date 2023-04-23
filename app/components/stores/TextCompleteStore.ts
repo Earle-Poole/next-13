@@ -22,10 +22,12 @@ export const defaultTextCompleteAtom: TextCompleteStore = {
 
 export type TextModelValues = (typeof TextModels)[keyof typeof TextModels]
 
-export const chatAtom = atomWithStorage<TextCompleteStore>(
+const textCompleteAtom = atomWithStorage<TextCompleteStore>(
   'textComplete',
-  defaultTextCompleteAtom
+  defaultTextCompleteAtom,
 )
+
+export default textCompleteAtom
 
 export interface ITextCompletionRequest extends CreateCompletionRequest {
   model: TextModelValues

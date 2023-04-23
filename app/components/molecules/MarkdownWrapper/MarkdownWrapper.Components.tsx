@@ -4,13 +4,13 @@ import {
   CodeComponent,
   HeadingComponent,
   LiComponent,
-  UnorderedListComponent,
   OrderedListComponent,
+  UnorderedListComponent,
 } from 'react-markdown/lib/ast-to-react'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 const SyntaxHighlighter = lazy(
-  () => import('react-syntax-highlighter/dist/esm/prism')
+  () => import('react-syntax-highlighter/dist/esm/prism'),
 )
 
 const H1: HeadingComponent = ({ children }) => (
@@ -52,15 +52,16 @@ const Code: CodeComponent = ({
   return (!inline && match) || !hasPosition ? (
     <SyntaxHighlighter
       {...props}
-      children={String(children).replace(/\n$/, '')}
       style={oneDark}
       className={classNames(
         'w-auto rounded !m-4 whitespace-pre-wrap',
-        className
+        className,
       )}
       language={match?.[1]}
       PreTag="div"
-    />
+    >
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
   ) : (
     <code {...props} className={'bg-[rgb(43,43,43)] py-1 px-2 rounded'}>
       {children}
@@ -68,7 +69,7 @@ const Code: CodeComponent = ({
   )
 }
 
-export default {
+const components = {
   h1: H1,
   h2: H2,
   h3: H3,
@@ -78,3 +79,5 @@ export default {
   ol: Ol,
   code: Code,
 }
+
+export default components

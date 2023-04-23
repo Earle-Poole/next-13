@@ -1,3 +1,5 @@
 import { atom } from 'jotai'
 
-export const streamAtom = atom<string>('')
+const streamAtom = atom<string>('')
+
+export default streamAtom

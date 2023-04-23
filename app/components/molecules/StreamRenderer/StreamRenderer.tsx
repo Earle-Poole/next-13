@@ -1,6 +1,6 @@
-import { streamAtom } from '@/components/stores/StreamStore'
-import { useAtom } from 'jotai'
 import MessageRenderer from '@/components/molecules/MessageRenderer'
+import streamAtom from '@/components/stores/StreamStore'
+import { useAtom } from 'jotai'
 import { ChatCompletionResponseMessageRoleEnum } from 'openai'
 
 const StreamRenderer = () => {

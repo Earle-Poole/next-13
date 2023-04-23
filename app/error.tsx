@@ -1,11 +1,10 @@
 'use client'
 // Error pages must be client components
 // https://beta.nextjs.org/docs/routing/error-handling
-import { use, useEffect } from 'react'
-import { ErrorPageProps } from 'global'
 import PokemonButton from '@/components/molecules/PokemonButton'
 import { getPokemonList } from '@/utils/cache'
-import { getRandomPokemon } from '@/utils/lib'
+import { ErrorPageProps } from 'global'
+import { use, useEffect } from 'react'
 
 /**
  * This is a page-level error handler
@@ -13,7 +12,6 @@ import { getRandomPokemon } from '@/utils/lib'
 const Error = (props: ErrorPageProps) => {
   const { error, reset } = props
   const pokemonList = use(getPokemonList())
-  const randomPokemon = getRandomPokemon(pokemonList)
   useEffect(() => {
     // Log the error to Sentry, or similar
     console.log('The error: ', error)
@@ -24,7 +22,7 @@ const Error = (props: ErrorPageProps) => {
       <p>Something went wrong!</p>
       <button onClick={reset}>Reset error boundary</button>
       <div>
-        <PokemonButton pokemon={randomPokemon} />
+        <PokemonButton pokemonList={pokemonList} />
       </div>
     </div>
   )

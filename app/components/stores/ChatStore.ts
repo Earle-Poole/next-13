@@ -22,10 +22,9 @@ export const defaultChatAtom: IChatStoreType = {
 }
 
 // The default state should be a conversation with the chat bot. The first entry will be the user's initial prompt.
-export const chatAtom = atomWithStorage<IChatStoreType>(
-  CHAT_KEY,
-  defaultChatAtom
-)
+const chatAtom = atomWithStorage<IChatStoreType>(CHAT_KEY, defaultChatAtom)
+export default chatAtom
+
 chatAtom.onMount = () => {
   const fromStorage = localStorage.getItem(CHAT_KEY) ?? '{}'
   try {

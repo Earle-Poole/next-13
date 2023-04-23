@@ -1,9 +1,5 @@
 import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react'
 
-interface ButtonProps {
-  title: string
-}
-
 const Button: FC<
   React.PropsWithChildren<
     DetailedHTMLProps<

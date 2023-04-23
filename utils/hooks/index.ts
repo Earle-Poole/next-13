@@ -1,3 +1,1 @@
-import useChat from './useChat'
-
-export default { useChat }
+export { default } from './useChat'

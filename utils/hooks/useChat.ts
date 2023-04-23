@@ -1,18 +1,18 @@
+import chatAtom, { defaultChatAtom } from '@/components/stores/ChatStore'
+import streamAtom from '@/components/stores/StreamStore'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
-import { useState, useEffect, useRef, FormEventHandler } from 'react'
 import { useAtom } from 'jotai'
-import { chatAtom, defaultChatAtom } from '@/components/stores/ChatStore'
-import { streamAtom } from '@/components/stores/StreamStore'
 import {
   ChatCompletionRequestMessageRoleEnum,
   ChatCompletionResponseMessage,
 } from 'openai'
+import { HEADERS_STREAM } from 'pages/api/chat-stream'
+import { FormEventHandler, useEffect, useRef, useState } from 'react'
 import {
   ChatModelValues,
   ExtendedCreateChatCompletionResponse,
   IChatCompletionRequest,
 } from 'types/useChat.types'
-import { HEADERS_STREAM } from 'pages/api/chat-stream'
 import usePrePrompt from './usePrePrompt'
 
 function useChat() {
@@ -38,7 +38,7 @@ function useChat() {
     selectedOption: {
       value: ChatModelValues
       label: ChatModelValues
-    } | null
+    } | null,
   ) => {
     if (!selectedOption) {
       return
@@ -67,7 +67,7 @@ function useChat() {
     ]
 
     const prevSystemMessage = newMessages.findIndex(
-      (msg) => msg.role === ChatCompletionRequestMessageRoleEnum.System
+      (msg) => msg.role === ChatCompletionRequestMessageRoleEnum.System,
     )
     if (prevSystemMessage !== -1) {
       newMessages.splice(prevSystemMessage, 1)
@@ -174,7 +174,7 @@ function useChat() {
     } catch (e) {
       console.error(
         'An error occurred while sending ChatCompletionRequest:\n',
-        e
+        e,
       )
     }
   }
@@ -195,7 +195,7 @@ function useChat() {
     if (!isMounted) {
       setIsMounted(true)
     }
-  }, [])
+  }, [isMounted])
 
   return {
     isMounted,

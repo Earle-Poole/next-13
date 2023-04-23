@@ -1,13 +1,13 @@
 'use client'
+import MessageRenderer from '@/components/molecules/MessageRenderer'
+import StreamRenderer from '@/components/molecules/StreamRenderer'
+import chatAtom from '@/components/stores/ChatStore'
+import streamAtom from '@/components/stores/StreamStore'
+import useChat from '@/utils/hooks/useChat'
 import { useAtom } from 'jotai'
-import { chatAtom } from '@/components/stores/ChatStore'
+import { ChatCompletionResponseMessageRoleEnum } from 'openai'
 import { useEffect, useRef } from 'react'
 import LoadingIndicator from '../../atom/LoadingIndicator/LoadingIndicator'
-import MessageRenderer from '@/components/molecules/MessageRenderer'
-import useChat from '@/utils/hooks/useChat'
-import StreamRenderer from '@/components/molecules/StreamRenderer'
-import { streamAtom } from '@/components/stores/StreamStore'
-import { ChatCompletionResponseMessageRoleEnum } from 'openai'
 
 const ChatOutput = () => {
   const { isMounted } = useChat()
@@ -24,7 +24,7 @@ const ChatOutput = () => {
         window
           .getComputedStyle(current, null)
           .getPropertyValue('font-size')
-          .split('px')[0]
+          .split('px')[0],
       )
       const scrollLeewayByFontSize = (fontSize || 0) * 4
       const scrollHeightRequiredToAutoScroll =
@@ -55,7 +55,7 @@ const ChatOutput = () => {
             messages.map((message) =>
               message.role !== ChatCompletionResponseMessageRoleEnum.System ? (
                 <MessageRenderer key={message.content} message={message} />
-              ) : null
+              ) : null,
             )
           ) : (
             <div className="flex justify-center italic">

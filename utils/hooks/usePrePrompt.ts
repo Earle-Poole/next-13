@@ -1,5 +1,4 @@
-import {
-  prePromptAtom,
+import prePromptAtom, {
   PersonaOptionValues,
   SkillLevelOptionValues,
   ToneOptionValues,
@@ -16,7 +15,7 @@ const usePrePrompt = () => {
     if (!isMounted) {
       setIsMounted(true)
     }
-  }, [])
+  }, [isMounted])
   const setTone = (e: SingleValue<ToneOptionValues>) => {
     if (!e) return
     setPrePrompt((prev) => ({ ...prev, tone: e }))

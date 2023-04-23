@@ -24,10 +24,13 @@ const defaultPrePrompt: IPrePromptStoreType = {
   tone: toneOptions.None,
   skillLevel: skillLevelOptions.None,
 }
-export const prePromptAtom = atomWithStorage<IPrePromptStoreType>(
+const prePromptAtom = atomWithStorage<IPrePromptStoreType>(
   PREPROMPT_KEY,
-  defaultPrePrompt
+  defaultPrePrompt,
 )
+
+export default prePromptAtom
+
 prePromptAtom.onMount = () => {
   const fromStorage = localStorage.getItem(PREPROMPT_KEY) ?? '{}'
   try {

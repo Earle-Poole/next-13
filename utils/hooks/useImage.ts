@@ -56,7 +56,7 @@ const useImage = () => {
     selectedOption: {
       value: ImageSizeValues
       label: ImageSizeValues
-    } | null
+    } | null,
   ) => {
     if (!selectedOption) {
       return
@@ -67,7 +67,7 @@ const useImage = () => {
 
   useEffect(() => {
     if (!isMounted) setIsMounted(true)
-  }, [])
+  }, [isMounted])
 
   return {
     url,

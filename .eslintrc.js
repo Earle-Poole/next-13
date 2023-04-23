@@ -13,6 +13,7 @@ module.exports = {
   ],
   globals: {
     JSX: true,
+    React: true,
   },
   overrides: [
     {
