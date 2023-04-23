@@ -2,7 +2,8 @@
 
 import Button from '@/components/atom/Button/Button'
 import LoadingIndicator from '@/components/atom/LoadingIndicator/LoadingIndicator'
-import useImage, { ImageSizes } from '@/utils/hooks/useImage'
+import { ImageSizes } from '@/components/stores/ImageStore'
+import useImage from '@/utils/hooks/useImage'
 import { FC } from 'react'
 import Select from 'react-select'
 

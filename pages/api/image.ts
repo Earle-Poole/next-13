@@ -1,4 +1,4 @@
-import { ImageSizes } from '@/utils/hooks/useImage'
+import { ImageSizes } from '@/components/stores/ImageStore'
 import type { NextRequest } from 'next/server'
 import { Configuration, OpenAIApi } from 'openai-edge'
 

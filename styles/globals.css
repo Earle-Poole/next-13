@@ -70,10 +70,40 @@ svg {
 
 *::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background-color: #334155;
+  background-color: #6b7280;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: #263140;
+  background-color: #585e6a;
 
+}
+
+textarea::-webkit-input-placeholder {
+  line-height: 0;
+  position: relative;
+  text-align: start;
+  top: 50%;
+}
+
+textarea:-moz-placeholder {
+  /* Firefox 18- */
+  line-height: 0;
+  position: relative;
+  text-align: start;
+  top: 50%;
+}
+
+textarea::-moz-placeholder {
+  /* Firefox 19+ */
+  line-height: 0;
+  position: relative;
+  text-align: start;
+  top: 50%;
+}
+
+textarea:-ms-input-placeholder {
+  line-height: 0;
+  position: relative;
+  text-align: start;
+  top: 50%;
 }

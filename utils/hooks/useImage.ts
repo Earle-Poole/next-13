@@ -1,19 +1,17 @@
-import imageAtom from '@/components/stores/ImageStore'
+import imageAtom, { ImageSizeValues } from '@/components/stores/ImageStore'
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
 
-export type ImageSizeValues = (typeof ImageSizes)[keyof typeof ImageSizes]
-export const ImageSizes = {
-  SMALL: '256x256',
-  MEDIUM: '512x512',
-  LARGE: '1024x1024',
-} as const
-
 const useImage = () => {
-  const [{ url, isLoading }, setImageAtom] = useAtom(imageAtom)
+  const [{ url, isLoading, size }, setImageAtom] = useAtom(imageAtom)
   const [isMounted, setIsMounted] = useState(false)
-  const [size, setSize] = useState<ImageSizeValues>(ImageSizes.SMALL)
 
+  const setSize = (size: ImageSizeValues) => {
+    setImageAtom((prev) => ({
+      ...prev,
+      size,
+    }))
+  }
   const setUrl = (url: string) => {
     setImageAtom((prev) => ({
       ...prev,

@@ -6,9 +6,17 @@ import { useAtom } from 'jotai'
 import Image from 'next/image'
 
 const ImageOutput = () => {
-  const [{ url, isLoading }] = useAtom(imageAtom)
+  const [{ url, isLoading, size }] = useAtom(imageAtom)
+  const [height, width] = size.split('x')
   const image = url ? (
-    <Image alt={'An AI generated image based on user input.'} src={url} />
+    <div className="">
+      <Image
+        alt={'An AI generated image based on user input.'}
+        src={url}
+        width={parseInt(width)}
+        height={parseInt(height)}
+      />
+    </div>
   ) : null
   return (
     <section className="flex justify-center">
