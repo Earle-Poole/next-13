@@ -7,12 +7,19 @@ import {
   ChatCompletionResponseMessage,
 } from 'openai'
 import { HEADERS_STREAM } from 'pages/api/chat-stream'
-import { FormEventHandler, useEffect, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  FormEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {
   ChatModelValues,
   ExtendedCreateChatCompletionResponse,
   IChatCompletionRequest,
 } from 'types/useChat.types'
+import { onTextAreaChange } from '../lib'
 import usePrePrompt from './usePrePrompt'
 
 function useChat() {
@@ -49,7 +56,8 @@ function useChat() {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
-    const target = e.target as HTMLFormElement
+    const target = e.currentTarget as HTMLFormElement
+    const inputElem = target.querySelector('[name="message"]')
     const form = new FormData(target)
 
     const message = form.get('message')
@@ -83,6 +91,9 @@ function useChat() {
 
     setChatMessages(newMessages)
     target.reset()
+    onTextAreaChange({
+      target: inputElem,
+    } as ChangeEvent<HTMLTextAreaElement>)
 
     const requestObject: IChatCompletionRequest = {
       messages: newMessages,

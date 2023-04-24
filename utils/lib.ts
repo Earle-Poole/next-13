@@ -34,7 +34,7 @@ export function getRandomPokemon(pokemonList: NamedAPIResourceList) {
  */
 export function asyncComponent<T, R>(
   // The function to wrap
-  fn: (arg: T) => Promise<R>
+  fn: (arg: T) => Promise<R>,
 ): (arg: T) => R {
   // Return the wrapped function
   return fn as (arg: T) => R
@@ -47,7 +47,7 @@ export function generateUUID() {
       const random16Bits = (Math.random() * 16) | 0
       const value = char === 'x' ? random16Bits : (random16Bits & 0x3) | 0x8
       return value.toString(16)
-    }
+    },
   )
 }
 
@@ -67,7 +67,7 @@ export const onTextAreaChange: ChangeEventHandler<HTMLTextAreaElement> = ({
   const targetComputedStyle = getComputedStyle(target, null)
   const lineHeight = parseInt(
     targetComputedStyle.getPropertyValue('line-height'),
-    10
+    10,
   )
   const maxLines = 10
   const maxHeight = lineHeight * maxLines

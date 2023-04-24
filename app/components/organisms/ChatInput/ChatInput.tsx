@@ -31,7 +31,7 @@ const ChatInput = () => {
             <LoadingIndicator />
           </div>
         )}
-        <div className="relative flex-1">
+        <div className="relative flex-1 min-w-[13rem] h-12">
           <textarea
             placeholder="Send a message..."
             className={
