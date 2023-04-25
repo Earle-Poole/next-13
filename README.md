@@ -20,7 +20,7 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 - Stored conversations across user profiles
   - Storing data in Google Drive?
 - Other Services
-  - DALL-E
+  - ~~DALL-E~~
   - Whisper
   - Text Completion
 - Conversation Optimizer
