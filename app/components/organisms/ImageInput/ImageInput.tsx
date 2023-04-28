@@ -7,7 +7,7 @@ import useImage from '@/utils/hooks/useImage'
 import { FC } from 'react'
 import Select from 'react-select'
 
-const ImageInput: FC<{}> = () => {
+const ImageInput: FC = () => {
   const { onImageSubmit, onSizeChange, isMounted, size } = useImage()
 
   return (

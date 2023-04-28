@@ -1,1 +1,1 @@
-export interface PrePromptProps {}
+// export interface PrePromptProps {}

@@ -1,2 +1,2 @@
 export { default } from './PrePrompt'
-export * from './PrePrompt.types'
+// export * from './PrePrompt.types'

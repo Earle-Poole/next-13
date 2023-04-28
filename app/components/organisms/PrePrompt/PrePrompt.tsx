@@ -1,17 +1,17 @@
 'use client'
 
 import { FC } from 'react'
-import { PrePromptProps } from './PrePrompt.types'
-import Select from 'react-select'
-import usePrePrompt from '@/utils/hooks/usePrePrompt'
+// import { PrePromptProps } from './PrePrompt.types'
+import LoadingIndicator from '@/components/atom/LoadingIndicator/LoadingIndicator'
 import {
   personaOptions,
   skillLevelOptions,
   toneOptions,
 } from '@/utils/constants'
-import LoadingIndicator from '@/components/atom/LoadingIndicator/LoadingIndicator'
+import usePrePrompt from '@/utils/hooks/usePrePrompt'
+import Select from 'react-select'
 
-const PrePrompt: FC<PrePromptProps> = () => {
+const PrePrompt: FC = () => {
   const { isMounted, prePrompt, setSkillLevel, setTone, setPersona } =
     usePrePrompt()
 
