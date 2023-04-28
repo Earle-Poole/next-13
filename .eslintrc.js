@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     // 'standard-with-typescript', // This rule is *VERY* strict. Use wisely.
@@ -31,6 +32,7 @@ module.exports = {
   plugins: ['react', 'react-hooks'],
   rules: {
     'comma-dangle': 'off',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
   },
 }

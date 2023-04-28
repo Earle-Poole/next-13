@@ -24,6 +24,6 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
   - Whisper
   - Text Completion
 - Conversation Optimizer
-- Context Window selection
+- ~~Context Window selection~~
 - Custom Context Window additions
-- Change ChatInput's input element to a textarea
+- ~~Change ChatInput's input element to a textarea~~

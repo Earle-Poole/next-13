@@ -15,6 +15,7 @@
     "@microsoft/fetch-event-source": "^2.0.1",
     "classnames": "2.3.2",
     "jotai": "1.13.0",
+    "localforage": "^1.10.0",
     "lodash": "4.17.21",
     "next": "13.3.1",
     "openai": "^3.2.1",
