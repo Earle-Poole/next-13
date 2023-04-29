@@ -1,4 +1,5 @@
 import chatAtom, { defaultChatAtom } from '@/components/stores/ChatStore'
+import selectedConversationAtom from '@/components/stores/SelectedConversationStore'
 import streamAtom from '@/components/stores/StreamStore'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
 import { useAtom } from 'jotai'
@@ -19,15 +20,26 @@ import {
   ExtendedCreateChatCompletionResponse,
   IChatCompletionRequest,
 } from 'types/useChat.types'
-import { onTextAreaChange } from '../lib'
+import { generateId, onTextAreaChange } from '../lib'
+// import useConversationList from './useConversationList'
+import conversationListAtom from '@/components/stores/ConversationListStore'
+import { cloneDeep } from 'lodash'
 import usePrePrompt from './usePrePrompt'
 
 function useChat() {
   const [isMounted, setIsMounted] = useState(false)
-  const [{ messages, model, isWaiting }, setChatStore] = useAtom(chatAtom)
+  const [selectedConversationId, setSelectedConversationId] = useAtom(
+    selectedConversationAtom,
+  )
+  const [conversations, setConversations] = useAtom(conversationListAtom)
+  // const { getConversationById, setConversationById } = useConversationList()
+  const [{ model, isWaiting }, setChatStore] = useAtom(chatAtom)
   const [streamResponse, setStreamResponse] = useAtom(streamAtom)
   const { getPrePromptString } = usePrePrompt()
   const ctrl = useRef(new AbortController())
+  const currentConversation = conversations.find(
+    (c) => c.id === selectedConversationId,
+  )
 
   const setChatMessages = (messages: ChatCompletionResponseMessage[]) => {
     setChatStore((prev) => ({ ...prev, messages }))
@@ -53,6 +65,29 @@ function useChat() {
     const value = selectedOption.value
     setChatModel(value)
   }
+  const updateCurrentConversation = (
+    newMessages: ChatCompletionResponseMessage[],
+  ) => {
+    const updatedID = selectedConversationId || generateId(12)
+    setSelectedConversationId(updatedID)
+
+    const updatedIDIndex = conversations.findIndex((c) => c.id === updatedID)
+
+    const clonedConversations = cloneDeep(conversations)
+    if (updatedIDIndex === -1) {
+      // HANDLE NEW CONVERSATION
+      clonedConversations.push({
+        id: updatedID,
+        messages: newMessages,
+        title: `Chat ${updatedID}`,
+      })
+      setConversations(clonedConversations)
+      return
+    }
+
+    clonedConversations[updatedIDIndex].messages = newMessages
+    setConversations(clonedConversations)
+  }
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
@@ -67,7 +102,7 @@ function useChat() {
     }
 
     const newMessages = [
-      ...messages,
+      ...(currentConversation?.messages ?? []),
       {
         role: ChatCompletionRequestMessageRoleEnum.User,
         content: message.toString(),
@@ -90,6 +125,7 @@ function useChat() {
     }
 
     setChatMessages(newMessages)
+    updateCurrentConversation(newMessages)
     target.reset()
     onTextAreaChange({
       target: inputElem,
@@ -163,10 +199,13 @@ function useChat() {
         onclose() {
           console.log('Closing stream...')
           setStreamResponse((prevStream) => {
-            setChatMessages([
+            const updatedMessages: ChatCompletionResponseMessage[] = [
               ...newMessages,
               { role: 'assistant', content: prevStream },
-            ])
+            ]
+            setChatMessages(updatedMessages)
+            updateCurrentConversation(updatedMessages)
+
             return ''
           })
         },
@@ -192,6 +231,7 @@ function useChat() {
 
   const onClear = () => {
     setChatMessages(defaultChatAtom.messages)
+    updateCurrentConversation(defaultChatAtom.messages)
     if (isWaiting) {
       setIsWaiting(false)
     }

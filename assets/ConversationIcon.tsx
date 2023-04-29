@@ -1,10 +1,10 @@
-import { FC } from 'react'
+import { FC, SVGProps } from 'react'
 
-const ConversationIcon: FC<{
-  fill?: string
-  height?: string
-  width?: string
-}> = ({ fill = '#000000', width = '1rem', height = '1rem' }) => {
+const ConversationIcon: FC<SVGProps<SVGSVGElement>> = ({
+  fill = '#000000',
+  width = '1rem',
+  height = '1rem',
+}) => {
   return (
     <svg
       fill={fill}

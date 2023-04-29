@@ -1,2 +1,2 @@
 export { default } from './ConversationItem'
-export * from './ConversationItem.types'
+// export * from './ConversationItem.types'

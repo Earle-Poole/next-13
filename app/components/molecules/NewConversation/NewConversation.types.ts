@@ -1,3 +1,1 @@
-export interface NewConversationProps {
-  setSelectedConversationId: (id: null) => void
-}
+// export interface NewConversationProps {}

@@ -1,12 +1,13 @@
 'use client'
 
 import Button from '@/components/atom/Button/Button'
+import selectedConversationAtom from '@/components/stores/SelectedConversationStore'
+import { useAtom } from 'jotai'
 import { FC } from 'react'
-import { NewConversationProps } from './NewConversation.types'
+// import { NewConversationProps } from './NewConversation.types'
 
-const NewConversation: FC<NewConversationProps> = ({
-  setSelectedConversationId,
-}) => {
+const NewConversation: FC = () => {
+  const [, setSelectedConversationId] = useAtom(selectedConversationAtom)
   return (
     <Button
       onClick={() => setSelectedConversationId(null)}

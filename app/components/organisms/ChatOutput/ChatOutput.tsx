@@ -2,6 +2,8 @@
 import MessageRenderer from '@/components/molecules/MessageRenderer'
 import StreamRenderer from '@/components/molecules/StreamRenderer'
 import chatAtom from '@/components/stores/ChatStore'
+import conversationListAtom from '@/components/stores/ConversationListStore'
+import selectedConversationAtom from '@/components/stores/SelectedConversationStore'
 import streamAtom from '@/components/stores/StreamStore'
 import useChat from '@/utils/hooks/useChat'
 import { useAtom } from 'jotai'
@@ -10,10 +12,17 @@ import { useEffect, useRef } from 'react'
 import LoadingIndicator from '../../atom/LoadingIndicator/LoadingIndicator'
 
 const ChatOutput = () => {
-  const { isMounted } = useChat()
-  const [{ messages, isWaiting }] = useAtom(chatAtom)
+  const [conversations] = useAtom(conversationListAtom)
+  const [selectedConversationId] = useAtom(selectedConversationAtom)
+  const [{ isWaiting }] = useAtom(chatAtom)
   const [streamResponse] = useAtom(streamAtom)
+
+  const { isMounted } = useChat()
   const chatOutputRef = useRef<HTMLElement>(null)
+
+  const currentConversation = conversations.find(
+    (conversation) => conversation.id === selectedConversationId,
+  )
 
   // Scroll the window down if the scroll is at the bottom, and
   // a response is actively streaming
@@ -42,7 +51,9 @@ const ChatOutput = () => {
     if (current) {
       current.scrollTop = current.scrollHeight
     }
-  }, [messages])
+  }, [currentConversation?.messages])
+
+  const hasMessages = currentConversation?.messages?.length ?? 0 > 0
 
   return (
     <section
@@ -51,8 +62,8 @@ const ChatOutput = () => {
     >
       {isMounted ? (
         <>
-          {messages.length > 0 ? (
-            messages.map((message) =>
+          {hasMessages ? (
+            currentConversation?.messages.map((message) =>
               message.role !== ChatCompletionResponseMessageRoleEnum.System ? (
                 <MessageRenderer key={message.content} message={message} />
               ) : null,

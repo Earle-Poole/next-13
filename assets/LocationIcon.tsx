@@ -1,8 +1,8 @@
-import { FC } from 'react'
+import { FC, SVGProps } from 'react'
 
 const hexCodeRegExp = /#([0-9a-f]{3}){1,2}\b/i
 
-const LocationIcon: FC<{ fill?: string; height?: string; width?: string }> = ({
+const LocationIcon: FC<SVGProps<SVGSVGElement>> = ({
   fill = '#000000',
   width = '1rem',
   height = '1rem',
