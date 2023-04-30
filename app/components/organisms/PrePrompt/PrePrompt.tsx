@@ -19,10 +19,15 @@ const PrePrompt: FC = () => {
     <section className="flex gap-4 flex-col sm:flex-row whitespace-nowrap">
       {isMounted ? (
         <>
-          <div className="flex-1">
-            <label htmlFor="skill-level-options">Skill Level</label>
+          <div className="flex-1 flex lg:flex-col gap-2">
+            <label
+              className="whitespace-pre-wrap flex-1"
+              htmlFor="skill-level-options"
+            >
+              Skill Level:
+            </label>
             <Select
-              className="text-black"
+              className="text-black flex-[3]"
               classNames={{
                 option: (props) => (props.isSelected ? 'text-white' : ''),
               }}
@@ -33,10 +38,15 @@ const PrePrompt: FC = () => {
               inputId="skill-level-options"
             />
           </div>
-          <div className="flex-1">
-            <label htmlFor="tone-options">Tone</label>
+          <div className="flex-1 flex lg:flex-col gap-2">
+            <label
+              className="whitespace-pre-wrap flex-1"
+              htmlFor="tone-options"
+            >
+              Tone:
+            </label>
             <Select
-              className="text-black"
+              className="text-black flex-[3]"
               classNames={{
                 option: (props) => (props.isSelected ? 'text-white' : ''),
               }}
@@ -47,10 +57,15 @@ const PrePrompt: FC = () => {
               inputId="tone-options"
             />
           </div>
-          <div className="flex-1">
-            <label htmlFor="persona-options">Persona</label>
+          <div className="flex-1 flex lg:flex-col gap-2">
+            <label
+              className="whitespace-pre-wrap flex-1"
+              htmlFor="persona-options"
+            >
+              Persona:
+            </label>
             <Select
-              className="text-black"
+              className="text-black flex-[3]"
               classNames={{
                 option: (props) => (props.isSelected ? 'text-white' : ''),
               }}
@@ -63,7 +78,7 @@ const PrePrompt: FC = () => {
           </div>
         </>
       ) : (
-        <div className="flex justify-center items-center flex-1 min-h-[3.875rem]">
+        <div className="flex justify-center items-center flex-1 min-h-[8rem] sm:min-h-[3.875rem]">
           <LoadingIndicator />
         </div>
       )}

@@ -40,7 +40,7 @@ const ConversationItem: FC<Omit<Conversation, 'messages'>> = ({
     <Button
       onClick={onConversationClick}
       className={classNames(
-        'w-full flex items-center relative rounded-md bg-gray-500 h-16 p-4 gap-1 [&>span>svg:last-of-type]:hover:visible',
+        'w-full flex items-center relative rounded-md bg-gray-500 h-16 p-4 gap-1 [&>span>svg:last-of-type]:hover:block',
         {
           'border-2 border-gray-800 p-3.5': isSelected,
         },
@@ -52,7 +52,7 @@ const ConversationItem: FC<Omit<Conversation, 'messages'>> = ({
         <TrashIcon
           height="18"
           width="18"
-          className="invisible bg-gray-500 shadow-md shadow-gray-500 fill-white hover:fill-gray-300"
+          className="hidden bg-gray-500 shadow-md shadow-gray-500 fill-white hover:fill-gray-300"
         />
       </span>
     </Button>

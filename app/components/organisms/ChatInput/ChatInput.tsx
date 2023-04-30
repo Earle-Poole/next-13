@@ -11,42 +11,38 @@ const ChatInput = () => {
   const { model, onSubmit, isMounted, onModelChange, onClear } = useChat()
   return (
     <form onSubmit={onSubmit} className="flex gap-2 w-full">
-      <div className="flex flex-1 flex-wrap gap-2 relative h-12">
-        {isMounted ? (
-          <Select
-            className="text-black min-w-[13rem] min-h-[3rem]"
-            classNames={{
-              control: () => '!min-h-[3rem]',
-            }}
-            menuPlacement="top"
-            options={Object.values(ChatModels).map((chatModel) => ({
-              value: chatModel,
-              label: chatModel,
-            }))}
-            defaultValue={{ value: model, label: model }}
-            onChange={onModelChange}
-          />
-        ) : (
-          <div className="flex justify-center items-center min-w-[13rem] min-h-[3rem]">
-            <LoadingIndicator />
-          </div>
-        )}
-        <div className="relative flex-1 min-w-[13rem] h-12">
+      <div className="flex flex-1 flex-col lg:flex-row gap-2 relative">
+        <div className="relative flex-1 min-w-[12rem] min-h-[3rem]">
           <textarea
-            placeholder="Send a message..."
-            className={
-              'text-black p-2 rounded absolute bottom-0 left-0 right-0 resize-none h-12'
-            }
+            className="text-black rounded absolute bottom-0 left-0 right-0 resize-none placeholder:translate-x-2 placeholder:w-fit placeholder:translate-y-3 p-2"
             name="message"
             onChange={onTextAreaChange}
+            style={{ height: '50px', lineHeight: '16px' }}
+            placeholder="Send a message..."
           />
         </div>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <Button type="submit">Send</Button>
-        <Button type="button" onClick={onClear}>
-          Clear
-        </Button>
+        <div className="flex gap-2">
+          {isMounted ? (
+            <Select
+              className="flex-1 text-black leading-[2.25rem]"
+              defaultValue={{ value: model, label: model }}
+              menuPlacement="top"
+              onChange={onModelChange}
+              options={Object.values(ChatModels).map((chatModel) => ({
+                value: chatModel,
+                label: chatModel,
+              }))}
+            />
+          ) : (
+            <div className="flex flex-1 justify-center items-center h-[3.125rem]">
+              <LoadingIndicator />
+            </div>
+          )}
+          <Button type="submit">Send</Button>
+          <Button type="button" onClick={onClear}>
+            Clear
+          </Button>
+        </div>
       </div>
     </form>
   )

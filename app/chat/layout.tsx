@@ -7,7 +7,7 @@ export const metadata = {
 
 const Layout = ({ children }: LayoutPageProps) => {
   return (
-    <div className="flex flex-1 relative">
+    <div className="flex h-full max-w-[100vw] overflow-hidden">
       <ConversationList />
       {children}
     </div>
