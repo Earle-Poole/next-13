@@ -57,7 +57,6 @@ const ConversationList: FC<ConversationListProps> = () => {
       )}
     >
       <div className="flex flex-col gap-4 overflow-hidden">
-        <strong>WIP</strong>
         <NewConversation />
         {isMounted &&
           conversations.map((props) => (
