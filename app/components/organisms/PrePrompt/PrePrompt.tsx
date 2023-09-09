@@ -16,18 +16,18 @@ const PrePrompt: FC = () => {
     usePrePrompt()
 
   return (
-    <section className="flex gap-4 flex-col sm:flex-row whitespace-nowrap">
+    <section className="flex flex-col gap-4 whitespace-nowrap sm:flex-row">
       {isMounted ? (
         <>
-          <div className="flex-1 flex lg:flex-col gap-2">
+          <div className="flex flex-1 gap-2 lg:flex-col">
             <label
-              className="whitespace-pre-wrap flex-1"
+              className="flex-1 whitespace-pre-wrap"
               htmlFor="skill-level-options"
             >
               Skill Level:
             </label>
             <Select
-              className="text-black flex-[3]"
+              className="flex-[3] text-black"
               classNames={{
                 option: (props) => (props.isSelected ? 'text-white' : ''),
               }}
@@ -38,15 +38,15 @@ const PrePrompt: FC = () => {
               inputId="skill-level-options"
             />
           </div>
-          <div className="flex-1 flex lg:flex-col gap-2">
+          <div className="flex flex-1 gap-2 lg:flex-col">
             <label
-              className="whitespace-pre-wrap flex-1"
+              className="flex-1 whitespace-pre-wrap"
               htmlFor="tone-options"
             >
               Tone:
             </label>
             <Select
-              className="text-black flex-[3]"
+              className="flex-[3] text-black"
               classNames={{
                 option: (props) => (props.isSelected ? 'text-white' : ''),
               }}
@@ -57,15 +57,15 @@ const PrePrompt: FC = () => {
               inputId="tone-options"
             />
           </div>
-          <div className="flex-1 flex lg:flex-col gap-2">
+          <div className="flex flex-1 gap-2 lg:flex-col">
             <label
-              className="whitespace-pre-wrap flex-1"
+              className="flex-1 whitespace-pre-wrap"
               htmlFor="persona-options"
             >
               Persona:
             </label>
             <Select
-              className="text-black flex-[3]"
+              className="flex-[3] text-black"
               classNames={{
                 option: (props) => (props.isSelected ? 'text-white' : ''),
               }}
@@ -78,7 +78,7 @@ const PrePrompt: FC = () => {
           </div>
         </>
       ) : (
-        <div className="flex justify-center items-center flex-1 min-h-[8rem] sm:min-h-[3.875rem]">
+        <div className="flex min-h-[8rem] flex-1 items-center justify-center sm:min-h-[3.875rem]">
           <LoadingIndicator />
         </div>
       )}

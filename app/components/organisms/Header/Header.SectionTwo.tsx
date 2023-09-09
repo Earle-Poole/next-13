@@ -7,7 +7,7 @@ const SectionTwo = () => {
   const title = parsePathForTitle(String(pathname))
 
   return (
-    <section className="flex items-center flex-1 gap-4 justify-center text-3xl">
+    <section className="flex flex-1 items-center justify-center gap-4 text-3xl">
       {title}
     </section>
   )

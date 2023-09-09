@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: { appDir: true, enableUndici: false },
+  experimental: { appDir: true },
   images: {
     domains: ['oaidalleapiprodscus.blob.core.windows.net'],
     remotePatterns: [

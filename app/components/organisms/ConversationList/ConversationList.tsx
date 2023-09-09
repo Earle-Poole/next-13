@@ -50,9 +50,9 @@ const ConversationList: FC<ConversationListProps> = () => {
   return (
     <aside
       className={classNames(
-        'border-4 border-t-0 border-slate-800 bg-slate-700 p-4 absolute lg:relative lg:min-w-[16rem] lg:max-w-[16rem] z-10',
+        'absolute z-10 border-4 border-t-0 border-slate-800 bg-slate-700 p-4 lg:relative lg:min-w-[16rem] lg:max-w-[16rem]',
         {
-          'w-0 p-0 border-0': !isExpanded,
+          'w-0 border-0 p-0': !isExpanded,
         },
       )}
     >
