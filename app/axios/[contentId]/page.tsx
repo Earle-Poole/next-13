@@ -7,6 +7,7 @@ import {
 import { BlockTypes } from '@/utils/constants'
 import { Block } from 'global'
 import Image from 'next/image'
+import PLACEHOLDER from '@/public/assets/axios-placeholder.png'
 
 interface AxiosPageProps {
   params: {
@@ -23,15 +24,15 @@ export default async function Page(props: AxiosPageProps) {
       <span className="text-xs font-normal absolute top-1 left-1">
         Built @ {getNowAsLocalTimeString()}
       </span>
-      <article className="flex flex-1 items-center justify-center flex-col gap-4 p-8 relative">
-        {topic.primary_image ? (
-          <Image
-            height={500}
-            width={500}
-            src={topic.primary_image.base_image_url}
-            alt={topic.headline}
-          />
-        ) : null}
+      <article className="flex flex-1 items-center justify-center flex-col gap-4 p-8 !relative" style={{ position: 'relative' }}>
+        <Image
+          alt={topic.headline}
+          height={500}
+          width={500}
+          priority={true}
+          src={topic.primary_image?.base_image_url || PLACEHOLDER}
+          style={{ width: 'auto', height: 500 }}
+        />
         <section>
           <h1 className="text-4xl mb-8">{topic.headline}</h1>
           {parseBlocks(topic.blocks.blocks)}

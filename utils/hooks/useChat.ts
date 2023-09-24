@@ -3,10 +3,6 @@ import selectedConversationAtom from '@/components/stores/SelectedConversationSt
 import streamAtom from '@/components/stores/StreamStore'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
 import { useAtom } from 'jotai'
-import {
-  ChatCompletionRequestMessageRoleEnum,
-  ChatCompletionResponseMessage,
-} from 'openai'
 import { HEADERS_STREAM } from 'pages/api/chat-stream'
 import {
   ChangeEvent,
@@ -25,6 +21,7 @@ import { generateId, onTextAreaChange } from '../lib'
 import conversationListAtom from '@/components/stores/ConversationListStore'
 import { cloneDeep } from 'lodash'
 import usePrePrompt from './usePrePrompt'
+import { ChatCompletionRequestMessageRoleEnum, ChatCompletionResponseMessage } from 'openai-edge'
 
 function useChat() {
   const [isMounted, setIsMounted] = useState(false)

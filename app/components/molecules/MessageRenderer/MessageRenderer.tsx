@@ -3,7 +3,7 @@ import { capitalize } from 'lodash'
 import {
   ChatCompletionResponseMessage,
   ChatCompletionResponseMessageRoleEnum,
-} from 'openai'
+} from 'openai-edge'
 import { FC } from 'react'
 import MarkdownWrapper from '../MarkdownWrapper/MarkdownWrapper'
 
@@ -18,7 +18,7 @@ const MessageRenderer: FC<{ message: ChatCompletionResponseMessage }> = ({
       })}
     >
       <label className="text-sm italic mb-4">{capitalize(message.role)}:</label>
-      <MarkdownWrapper content={message.content} />
+      <MarkdownWrapper content={message.content ?? ''} />
     </article>
   )
 }

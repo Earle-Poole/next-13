@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import { lazy } from 'react'
 import {
   CodeComponent,
   HeadingComponent,
@@ -7,11 +6,8 @@ import {
   OrderedListComponent,
   UnorderedListComponent,
 } from 'react-markdown/lib/ast-to-react'
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
-
-const SyntaxHighlighter = lazy(
-  () => import('react-syntax-highlighter/dist/esm/prism'),
-)
 
 const H1: HeadingComponent = ({ children }) => (
   <h1 className="text-4xl font-normal leading-normal mt-0 mb-2">{children}</h1>
@@ -54,7 +50,7 @@ const Code: CodeComponent = ({
       {...props}
       style={oneDark}
       className={classNames(
-        'w-auto rounded !m-4 whitespace-pre-wrap',
+        'w-auto rounded !m-4 whitespace-pre-wrap max-w-7xl',
         className,
       )}
       language={match?.[1]}
@@ -63,7 +59,7 @@ const Code: CodeComponent = ({
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
   ) : (
-    <code {...props} className={'bg-[rgb(43,43,43)] py-1 px-2 rounded'}>
+    <code {...props} className={'bg-[rgb(43,43,43)] py-1 px-2 rounded whitespace-pre-wrap max-w-7xl'}>
       {children}
     </code>
   )

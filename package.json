@@ -18,7 +18,7 @@
     "localforage": "1.10.0",
     "lodash": "4.17.21",
     "next": "13.4.19",
-    "openai": "4.5.0",
+    "openai": "3.3.0",
     "openai-edge": "1.2.2",
     "react": "next",
     "react-dom": "next",

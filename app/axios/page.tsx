@@ -6,6 +6,7 @@ import {
 import { Block } from 'global'
 import { BlockTypes } from '@/utils/constants'
 import Image from 'next/image'
+import PLACEHOLDER from '@/public/assets/axios-placeholder.png'
 
 const renderBlocks = (blocks: Array<Block>) => {
   return blocks.map((block) => {
@@ -44,14 +45,14 @@ const Page = async () => {
         Built @ {getNowAsLocalTimeString()}
       </span>
       <article className="flex flex-1 items-center justify-center flex-col gap-4 p-8 relative">
-        {topic.primary_image ? (
-          <Image
-            height={500}
-            width={500}
-            src={topic.primary_image.base_image_url}
-            alt={topic.headline}
-          />
-        ) : null}
+        <Image
+          alt={topic.headline}
+          height={500}
+          width={500}
+          priority={true}
+          src={topic.primary_image?.base_image_url || PLACEHOLDER}
+          style={{ width: 'auto', height: 500 }}
+        />
         <section>
           <h1 className="text-4xl mb-8">{topic.headline}</h1>
           {renderBlocks(topic.blocks.blocks)}

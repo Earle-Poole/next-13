@@ -10,5 +10,11 @@
   "vs-code-prettier-eslint.prettierLast": false,
   "[css]": {
     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   } // set as "true" to run 'prettier' last not first
 }

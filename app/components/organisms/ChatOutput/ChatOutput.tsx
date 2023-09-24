@@ -7,9 +7,9 @@ import selectedConversationAtom from '@/components/stores/SelectedConversationSt
 import streamAtom from '@/components/stores/StreamStore'
 import useChat from '@/utils/hooks/useChat'
 import { useAtom } from 'jotai'
-import { ChatCompletionResponseMessageRoleEnum } from 'openai'
 import { useEffect, useRef } from 'react'
 import LoadingIndicator from '../../atom/LoadingIndicator/LoadingIndicator'
+import { ChatCompletionResponseMessageRoleEnum } from 'openai-edge'
 
 const ChatOutput = () => {
   const [conversations] = useAtom(conversationListAtom)

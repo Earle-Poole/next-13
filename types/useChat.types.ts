@@ -1,9 +1,5 @@
 import { ChatModels } from '@/components/stores/ChatStore'
-import {
-  CreateChatCompletionRequest,
-  CreateChatCompletionResponse,
-  CreateChatCompletionResponseChoicesInner,
-} from 'openai'
+import { CreateChatCompletionRequest, CreateChatCompletionResponse, CreateChatCompletionResponseChoicesInner } from 'openai-edge'
 
 export type ChatModelValues = (typeof ChatModels)[keyof typeof ChatModels]
 

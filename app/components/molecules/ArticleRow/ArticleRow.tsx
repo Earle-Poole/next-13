@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Topic } from 'global'
 import classNames from 'classnames'
 import { usePathname } from 'next/navigation'
+import PLACEHOLDER from '@/public/assets/axios-placeholder.png'
 
 interface ArticleRowProps {
   topic: Topic
@@ -30,14 +31,13 @@ const ArticleRow = (props: ArticleRowProps) => {
         }
       )}
     >
-      {topic.primary_image ? (
-        <Image
-          height={180}
-          width={180}
-          src={topic.primary_image.base_image_url}
-          alt={topic.headline}
-        />
-      ) : null}
+      <Image
+        height={180}
+        width={180}
+        style={{ height: 'auto', width: 180 }}
+        src={topic.primary_image?.base_image_url || PLACEHOLDER}
+        alt={topic.headline}
+      />
       <div className="pl-4 flex flex-col justify-between">
         <span className="font-bold">{topic.headline}</span>
         <div className="italic text-sm text-white/70">
