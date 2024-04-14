@@ -1,11 +1,11 @@
-import { ImageSizes } from '@/components/stores/ImageStore'
+import { ImageModels, ImageSizes } from '@/components/stores/ImageStore'
 import type { NextRequest } from 'next/server'
-import { Configuration, OpenAIApi } from 'openai-edge'
+import { OpenAI } from 'openai'
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_SECRET,
 })
-const openai = new OpenAIApi(configuration)
+
 
 const handler = async (req: NextRequest): Promise<Response> => {
   if (req.method !== 'POST') {
@@ -21,17 +21,21 @@ const handler = async (req: NextRequest): Promise<Response> => {
 
   try {
     const size = typeof body.size === 'string' ? body.size : ImageSizes.SMALL
-    const image = await openai.createImage({
+    const model = typeof body.model === 'string' ? body.model : ImageModels.DALL_E_2
+    const image = await openai.images.generate({
       prompt: body.message,
       n: 1,
       size,
       response_format: 'url',
+      model
     })
 
-    const json = await image.json()
+    const json = await image
 
     // TODO: Migrate to returning `json.data` as a whole, instead of
     // just the first item's URL, so that we can return multiple images
+    // TODO: Return the size and model in the response for the UI to
+    // label the fetched image
     const res = { url: json?.data?.[0]?.url ?? '' }
 
     return new Response(JSON.stringify(res), {

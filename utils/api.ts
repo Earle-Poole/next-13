@@ -1,5 +1,5 @@
-import type { ITextCompletionRequest } from '@/components/stores/TextCompleteStore'
-import type { CreateChatCompletionResponse } from 'openai'
+// import type { ITextCompletionRequest } from '@/components/stores/TextCompleteStore'
+import type { CreateChatCompletionResponse } from 'openai-edge'
 import { decodeBase64 } from './lib'
 
 export const sendChatCompletionRequest = async (
@@ -23,7 +23,7 @@ export const sendChatCompletionRequest = async (
 }
 
 export const sendTextCompletionRequest = async (
-  props: ITextCompletionRequest,
+  // props: ITextCompletionRequest,
 ): Promise<void> => {
   // TODO
 }

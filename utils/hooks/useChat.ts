@@ -21,7 +21,7 @@ import { generateId, onTextAreaChange } from '../lib'
 import conversationListAtom from '@/components/stores/ConversationListStore'
 import { cloneDeep } from 'lodash'
 import usePrePrompt from './usePrePrompt'
-import { ChatCompletionRequestMessageRoleEnum, ChatCompletionResponseMessage } from 'openai-edge'
+import { ChatCompletionMessageParam } from 'openai/resources'
 
 function useChat() {
   const [isMounted, setIsMounted] = useState(false)
@@ -38,7 +38,7 @@ function useChat() {
     (c) => c.id === selectedConversationId,
   )
 
-  const setChatMessages = (messages: ChatCompletionResponseMessage[]) => {
+  const setChatMessages = (messages: ChatCompletionMessageParam[]) => {
     setChatStore((prev) => ({ ...prev, messages }))
   }
 
@@ -63,7 +63,7 @@ function useChat() {
     setChatModel(value)
   }
   const updateCurrentConversation = (
-    newMessages: ChatCompletionResponseMessage[],
+    newMessages: ChatCompletionMessageParam[],
   ) => {
     const updatedID = selectedConversationId || generateId(12)
     setSelectedConversationId(updatedID)
@@ -98,16 +98,16 @@ function useChat() {
       return
     }
 
-    const newMessages = [
+    const newMessages: ChatCompletionMessageParam[] = [
       ...(currentConversation?.messages ?? []),
       {
-        role: ChatCompletionRequestMessageRoleEnum.User,
+        role: 'user',
         content: message.toString(),
       },
     ]
 
     const prevSystemMessage = newMessages.findIndex(
-      (msg) => msg.role === ChatCompletionRequestMessageRoleEnum.System,
+      (msg) => msg.role === 'system',
     )
     if (prevSystemMessage !== -1) {
       newMessages.splice(prevSystemMessage, 1)
@@ -116,7 +116,7 @@ function useChat() {
     const prePromptContent = getPrePromptString()
     if (prePromptContent) {
       newMessages.unshift({
-        role: ChatCompletionRequestMessageRoleEnum.System,
+        role: 'system',
         content: prePromptContent,
       })
     }
@@ -152,7 +152,7 @@ function useChat() {
           if (
             response.ok &&
             response.headers.get('content-type')?.replace(/ /g, '') ===
-              HEADERS_STREAM['Content-Type']
+            HEADERS_STREAM['Content-Type']
           ) {
             console.log('Opening stream...')
             return
@@ -196,7 +196,7 @@ function useChat() {
         onclose() {
           console.log('Closing stream...')
           setStreamResponse((prevStream) => {
-            const updatedMessages: ChatCompletionResponseMessage[] = [
+            const updatedMessages: ChatCompletionMessageParam[] = [
               ...newMessages,
               { role: 'assistant', content: prevStream },
             ]
@@ -254,7 +254,7 @@ function useChat() {
   }
 }
 
-class FatalError extends Error {}
-class RetriableError extends Error {}
+class FatalError extends Error { }
+class RetriableError extends Error { }
 
 export default useChat

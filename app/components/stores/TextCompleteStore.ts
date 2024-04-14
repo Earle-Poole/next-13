@@ -1,5 +1,5 @@
 import { atomWithStorage } from 'jotai/utils'
-import { CreateCompletionRequest } from 'openai'
+import { Completion } from 'openai/resources'
 
 interface TextCompleteStore {
   prompt: string
@@ -28,7 +28,6 @@ const textCompleteAtom = atomWithStorage<TextCompleteStore>(
 )
 
 export default textCompleteAtom
-
-export interface ITextCompletionRequest extends CreateCompletionRequest {
+export interface ITextCompletionRequest extends Completion {
   model: TextModelValues
 }

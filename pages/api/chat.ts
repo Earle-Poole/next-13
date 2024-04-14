@@ -3,18 +3,18 @@ import type { TextModelValues } from '@/components/stores/TextCompleteStore'
 import { TextModels } from '@/components/stores/TextCompleteStore'
 
 import { decodeBase64, encodeBase64 } from '@/utils/lib'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { Configuration, OpenAIApi } from 'openai'
-import { OpenAIApi as EdgeOpenAIApi } from 'openai-edge'
+import type { NextApiRequest } from 'next'
+// import OpenAI from 'openai'
+import { OpenAIApi as EdgeOpenAIApi, Configuration } from 'openai-edge'
 import type { ChatModelValues } from 'types/useChat.types'
 
-const configuration = new Configuration({
+const configuration = {
   apiKey: process.env.OPENAI_SECRET,
   organization: process.env.OPENAI_ORG,
-})
+}
 
-const openai = new OpenAIApi(configuration)
-const edgeopenai = new EdgeOpenAIApi(configuration)
+// const openai = new OpenAI(configuration)
+const edgeopenai = new EdgeOpenAIApi(new Configuration(configuration))
 
 /**
  * Handler function for the /api/chat route
@@ -23,13 +23,10 @@ const edgeopenai = new EdgeOpenAIApi(configuration)
  */
 async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  // res: NextApiResponse,
 ): Promise<Response | undefined> {
   if (req.method === 'GET') {
-    const enginesResponse = await openai.listEngines()
-    const { data: enginesData } = enginesResponse
-
-    return new Response(JSON.stringify(enginesData), { status: 200 })
+    return new Response(null, { status: 500 })
   }
 
   const body = await new Response(req.body).json()

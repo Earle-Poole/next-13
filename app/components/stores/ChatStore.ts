@@ -1,9 +1,9 @@
 import { atomWithStorage } from 'jotai/utils'
-import { ChatCompletionResponseMessage } from 'openai'
+import { ChatCompletionMessageParam } from 'openai/resources'
 import { ChatModelValues } from 'types/useChat.types'
 
 interface IChatStoreType {
-  messages: ChatCompletionResponseMessage[]
+  messages: ChatCompletionMessageParam[]
   model: ChatModelValues
   isWaiting: boolean
 }

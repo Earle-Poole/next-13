@@ -65,7 +65,7 @@ const ChatOutput = () => {
           {hasMessages ? (
             currentConversation?.messages.map((message) =>
               message.role !== ChatCompletionResponseMessageRoleEnum.System ? (
-                <MessageRenderer key={message.content} message={message} />
+                <MessageRenderer key={typeof message.content === 'string' ? message.content : 'unsupported image in chat :('} message={message} />
               ) : null,
             )
           ) : (

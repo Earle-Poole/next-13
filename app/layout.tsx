@@ -3,8 +3,8 @@ import { LayoutPageProps } from 'global'
 import '../styles/globals.css'
 import Header from './components/organisms/Header'
 
+export const viewport = 'width=device-width, initial-scale=1.0'
 export const metadata = {
-  viewport: 'width=device-width, initial-scale=1.0',
   description: 'Nested layouts in Next 13',
   title: 'Next 13 Playground',
 }

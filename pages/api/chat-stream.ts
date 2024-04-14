@@ -1,7 +1,6 @@
 import type { TextModelValues } from '@/components/stores/TextCompleteStore'
 import type { NextRequest } from 'next/server'
-import type { ChatCompletionRequestMessage } from 'openai'
-import { Configuration, OpenAIApi } from 'openai-edge'
+import { Configuration, OpenAIApi, ChatCompletionRequestMessage } from 'openai-edge'
 import type { ChatModelValues } from 'types/useChat.types'
 
 const configuration = new Configuration({
