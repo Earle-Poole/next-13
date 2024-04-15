@@ -12,11 +12,11 @@ const ImageInput: FC = () => {
 
   return (
     <section>
-      <form onSubmit={onImageSubmit} className="flex gap-2">
-        {isMounted ? (<>
+      <form onSubmit={onImageSubmit} className="flex gap-2 flex-col md:flex-row">
+        {isMounted ? (<section className='flex gap-2'>
           <Select
             key={`image-size-${size}`}
-            className="text-black min-w-[13rem] min-h-[2.75rem]"
+            className="text-black min-w-[11rem] min-h-[2.75rem] flex-1"
             classNames={{
               control: () => '!min-h-[2.75rem]',
             }}
@@ -29,7 +29,7 @@ const ImageInput: FC = () => {
             onChange={onSizeChange}
           />
           <Select
-            className="text-black min-w-[13rem] min-h-[2.75rem]"
+            className="text-black min-w-[11rem] min-h-[2.75rem] flex-1"
             classNames={{
               control: () => '!min-h-[2.75rem]',
             }}
@@ -40,7 +40,7 @@ const ImageInput: FC = () => {
             }))}
             defaultValue={{ value: model, label: model }}
             onChange={onModelChange} />
-        </>
+        </section>
         ) : (
           <div className="flex justify-center items-center min-w-[13rem] min-h-[2.75rem]">
             <LoadingIndicator />
