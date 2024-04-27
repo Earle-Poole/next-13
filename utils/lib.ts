@@ -40,6 +40,10 @@ export function asyncComponent<T, R>(
   return fn as (arg: T) => R
 }
 
+/**
+ * 
+ * @returns A generated v4 UUID
+ */
 export function generateUUID() {
   return '3xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(
     /[x]/g,

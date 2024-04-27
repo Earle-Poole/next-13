@@ -8,6 +8,7 @@ const pages = [
   { href: '/events', title: 'Events' },
   { href: '/chat', title: 'Chat' },
   { href: '/image', title: 'Image' },
+  { href: '/gravity', title: 'Gravity' }
 ]
 
 const Page = async () => {

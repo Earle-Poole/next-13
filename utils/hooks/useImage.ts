@@ -1,6 +1,6 @@
 import imageAtom, { ImageModelValues, ImageSizeValues, ImageSizesByModel } from '@/components/stores/ImageStore'
 import { useAtom } from 'jotai'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 const useImage = () => {
   const [{ url, isLoading, size, model }, setImageAtom] = useAtom(imageAtom)
@@ -32,7 +32,7 @@ const useImage = () => {
     }))
   }
 
-  const onImageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onImageSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const target = e.target as HTMLFormElement
     const form = new FormData(target)

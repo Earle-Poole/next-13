@@ -31,9 +31,10 @@ const usePrePrompt = () => {
 
   const getPrePromptString = () => {
     let str = ''
-    const { value: skillLevelValue, label: skillLevelLabel } =
-      prePrompt.skillLevel
 
+    const skillLevelLabel = prePrompt.skillLevel.label
+
+    const skillLevelValue = prePrompt.skillLevel.value
     const toneValue = prePrompt.tone.value
     const personaValue = prePrompt.persona.value
     const hasAnyValue = skillLevelValue || toneValue || personaValue
